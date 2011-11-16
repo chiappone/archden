@@ -55,16 +55,13 @@ public class QueryAppender {
 		
 		Map<String,Map<String,String>> parMap = gson.fromJson(jsonResp, mapType);
 		
-		//Logger.info("Results: "+ parMap.toString());
-		
-		/*
 		Collection<Map<String, String>> vals = parMap.values();
 		for(Map<String,String> parishes : vals){
 			String pId = parishes.get("parishid");
-			retMap.putAll(queryByRowkey(pId));
-		}*/
+			retMap.put(pId, parishes);
+		}
 		
-		return parMap;
+		return retMap;
 	}
 	
 	private Map<String,Map<String,String>> queryByRowkey(String rowKey) 
