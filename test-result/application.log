@@ -1,0 +1,4 @@
+16 Nov 2011 14:06:22,142 INFO  ~ Starting /Users/cchiappone/2lemetry/workspace/archden/.
+16 Nov 2011 14:06:22,741 WARN  ~ You're running Play! in DEV mode
+16 Nov 2011 14:06:23,953 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+16 Nov 2011 14:06:23,965 INFO  ~ Application 'archden' is now started !

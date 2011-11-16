@@ -1,0 +1,154 @@
+#{extends 'main.html' /} #{set title:'ArchDen Locator' /}
+
+<div id="content">
+	<div id="main">
+
+		*{ change the search form
+		<div class="search-query-main search-query-main-init">
+			<img height="30px;" src="@{'/public/images/search.png'}"
+				onClick="archden.showDefaultQueries();" style="cursor: pointer;" />
+			<div id="search-area" contenteditable="true"></div>
+		</div>
+		}*
+
+		<div id="search-area">
+			<form class="form">
+
+				<p class="location">
+					<label for="location">Enter an address, zip code, or city
+						and state to search</label> <br /> <input type="text" name="location"
+						id="location" size="40"/> <input type="text" name="radius" id="radius"
+						value="3" /><label for="radius">Radius in miles</label>
+				</p>
+				<p class="name">
+					<label for="name"> Or search by Parish name </label><br /> <input
+						id="name" size="40"/>
+				</p>
+				<p class="refine">
+					<label for="refine" id="refine" style="cursor: pointer;">
+						Refine your search </label>
+				<div id="more" style="display: none">
+					<label for="dow"> Day of Week </label> <select class="dow" id="dow">
+						<option>Sunday</option>
+						<option>Anticipitory</option>
+						<option>Saturday</option>
+						<option>Weekday</option>
+					</select> <label for="tod"> Time of Day </label> <select class="tod"
+						id="tod">
+						<option>Any</option>
+						<option>Morning</option>
+						<option>Noon</option>
+						<option>Afternoon</option>
+					</select>
+					<label for="confession"> Search only confessions </label>
+					<input name="confession" id="confession" value="confession" type="checkbox"/>
+					<br/>
+					<p><label>Topics</label></p>
+					<input name="topic" id="topic" value="adoration" type="radio"/>
+					<label> Adoration </label>
+					<br/>
+					<input name="topic" id="topic" value="spanish sunday" type="radio"/>
+					<label> Spanish Sunday</label>
+					<br/>
+					<input name="topic" id="topic" value="spanish weekday" type="radio"/>
+					<label> Spanish Weekday</label>
+					<br/>
+					<input name="topic" id="topic" value="life teen/youth mass" type="radio"/>
+					<label> Life Teen</label>
+					<br/>
+					<input name="topic" id="topic" value="school" type="radio"/>
+					<label> Have Schools </label>
+				</div>
+				
+				<div id="disp"></div>
+
+				</p>
+
+				<p class="submit">
+					<input type="button" value="Send" onClick="searchByTime();"
+						style="cursor: pointer;" />
+				</p>
+
+			</form>
+		</div>
+
+		<script>
+			var hidden = true;	
+
+			function searchByTime(){
+				archden.tod = $("#tod").val();
+				archden.dow = $("#dow").val();
+				archden.location = $('input#location').val();
+				archden.radius = $('input#radius').val();
+				archden.name = $('input#name').val();
+				archden.confession = $('input#confession:checked').val();
+				archden.topic = $('input#topic:checked').val();
+	
+				console.log("Confession: "+ archden.confession);
+				if(archden.location){
+					console.log("using location:"+ archden.location);
+					archden.getGeo();
+				}else{
+					archden.queryCassandraHq();
+				}
+			}
+			
+			$("select").change(searchByTime);
+			$(":radio").click(searchByTime);
+			$(":checkbox").click(searchByTime);
+
+			$('#refine').click(function() {
+				if (hidden) {
+					$('#more').show('slow', function() {
+						hidden = false;
+					});
+				} else {
+					$('#more').hide('slow', function() {
+						hidden = true;
+					});
+				}
+			});
+		</script>
+
+		<p id="nearest">
+			<span id="closest-church">Searching...</span>
+		</p>
+	</div>
+	<div id=mapContainer></div>
+	<div id=result-list>
+	
+	<style>
+	#feedback { font-size: 1.0em; }
+	#selectable .ui-selecting { background: #FECA40; }
+	#selectable .ui-selected { background: #999966; color: white; }
+	#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+	#selectable li { margin: 1px; padding: 0.2em; font-size: 1.0em; height: 15px; }
+	</style>
+	<script>
+	$(function() {
+		$( "#selectable" ).selectable();
+	});
+	</script>
+
+
+
+<div class="demo">
+
+<ol id="selectable">
+
+</ol>
+
+</div><!-- End demo -->
+
+
+
+<div class="demo-description" style="display: none; ">
+<p>Enable a DOM element (or group of elements) to be selectable. Draw a box with your cursor to select items. Hold down the Ctrl key to make multiple non-adjacent selections. </p>
+</div><!-- End demo-description -->
+	
+
+</div>
+</div>
+
+<!-- Include javscript last -->
+<script type="text/javascript" src="@{'/public/javascripts/archden.js'}"></script>
