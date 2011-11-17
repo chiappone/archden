@@ -83,7 +83,7 @@
 
 <script>
 	var hidden = true;
-	var lastId;
+
 	function searchByTime() {
 		archden.tod = $("#tod").val();
 		archden.dow = $("#dow").val();
@@ -125,12 +125,7 @@
 				var id = ui.selected.id;
 				console.log("ID: " + id);
 				$('#details-' + id).show('slow', function() {
-					if (lastId != id) {
-						$('#details-' + lastId).hide('fast', function() {
-
-						});
-					}
-					lastId = id;
+					
 				});
 			}
 		});
