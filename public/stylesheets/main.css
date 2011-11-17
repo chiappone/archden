@@ -127,13 +127,13 @@ hgroup h1 {
 
 #search-area {
 	display: block;
-	padding: 10px 10px 15px 10px;
+	padding: 0px 10px 0px 10px;
 	width: 60%;
 	float: left;
 }
 
 #mapContainer {
-	margin-top: 20px;
+	margin-top: -15px;
 	width: 100%;
 	height: 390px;
 	border: 2px dashed #ccc;
@@ -146,9 +146,13 @@ hgroup h1 {
 #result-list {
 	margin-top: 20px;
 	width: 100%;
-	height: 390px;
+	height: 400px;
+	overflow: scroll;
 	text-align: left;
 	float: right;
+	border: 2px dashed #ccc;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 #radius {
@@ -171,7 +175,7 @@ hgroup h1 {
 	width: 100px;
 }
 
-#closest-church { 
+#closest-church {
 	margin-left: 39%;
 	margin-bottom: 20px;
 	font-weight: bold;
@@ -192,7 +196,6 @@ input,textarea {
 	border: solid 1px #E5E5E5;
 	outline: 0;
 	font: normal 13px/100% Verdana, Tahoma, sans-serif;
-	
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 	-moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
@@ -226,4 +229,31 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 	border: 0;
 	font-size: 14px;
 	color: #FFFFFF;
+}
+
+#feedback {
+	font-size: 1.0em;
+}
+
+#selectable .ui-selecting {
+	background: #FECA40;
+}
+
+#selectable .ui-selected {
+	background: #999966;
+	color: white;
+}
+
+#selectable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#selectable li {
+	margin: 1px;
+	padding: 0.2em;
+	font-size: 1.0em;
+	height: 15px;
 }

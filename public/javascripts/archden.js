@@ -37,7 +37,8 @@ function initialize() {
 	console.log("init search");
 	var myOptions = {
 		zoom : 6,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+		scrollwheel: false
 	};
 	map = new google.maps.Map(document.getElementById('mapContainer'),
 			myOptions);
@@ -309,6 +310,7 @@ function ArchDen() {
 	};
 	
 	this.buildDataset = function(church, key, value) {
+		key = key.replace(/ /g,"_");
 		switch (key) {
 
 		case 'coordinates':
@@ -332,18 +334,28 @@ function ArchDen() {
 			if (!link) {
 				link = "";
 			}
-			var html = ['<ul><h2>', parish.nombre, '</h2>', 
+			var html = ['<ul id="'+ index +'"><h2>', parish.nombre, '</h2>', 
 			            '<li>Address: ', parish.physicaladdress, ', ', parish.physicalzip, '</li>',
 			            '<li>Distance: ', parish.distance, '</li>',
 			            '<li>Pastor: ',parish.pastor, '</li>', 
 			            '<li>Sunday Masstimes: ', parish.sunday, '</li>',
-			            '<li>Anticipitory Masstimes: ', parish.saturdayanticipatory, '</li>',
+			            '<li>Anticipitory Masstimes: ', parish.saturday_anticipatory, '</li>',
 			            '<li>Website: ', link.link(parish.website), '</li>',
+			            '<div id="details-' + index +'" style="display: none">',
+			            '<li>School: ', parish.grades, '</li>',
+			            '<li>Monday: ', parish.monday, '</li>',
+			            '<li>Tuesday: ', parish.tuesday, '</li>',
+			            '<li>Wednesday: ', parish.wednesday, '</li>',
+			            '<li>Thursday: ', parish.thursday, '</li>',
+			            '<li>Friday: ', parish.friday, '</li>',
+			            '<li>Saturday: ', parish.saturday, '</li>',
+			            '</div>',
 			            '</ul>' ].join('');
 			
 			$('#selectable').append(html);
-		})
 			
+		});
+
 	}
 	
 	this.compare = function(a,b) {

@@ -117,16 +117,19 @@
 	<div id=mapContainer></div>
 	<div id=result-list>
 	
-	<style>
-	#feedback { font-size: 1.0em; }
-	#selectable .ui-selecting { background: #FECA40; }
-	#selectable .ui-selected { background: #999966; color: white; }
-	#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-	#selectable li { margin: 1px; padding: 0.2em; font-size: 1.0em; height: 15px; }
-	</style>
 	<script>
 	$(function() {
-		$( "#selectable" ).selectable();
+		$( "#selectable" ).selectable({selected: 
+			function(event, ui) { 
+				
+				var id = ui.selected.id;
+				console.log("ID: "+ id);
+				$('#details-'+ id).show('slow', function(){
+					
+				});
+							
+			}
+		});
 	});
 	</script>
 
@@ -140,11 +143,6 @@
 
 </div><!-- End demo -->
 
-
-
-<div class="demo-description" style="display: none; ">
-<p>Enable a DOM element (or group of elements) to be selectable. Draw a box with your cursor to select items. Hold down the Ctrl key to make multiple non-adjacent selections. </p>
-</div><!-- End demo-description -->
 	
 
 </div>
