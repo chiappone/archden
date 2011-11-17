@@ -126,16 +126,16 @@ hgroup h1 {
 }
 
 #search-area {
-	display: block;
-	padding: 0px 10px 0px 10px;
-	width: 60%;
+	margin-top: 0px;
+	width: 420px;
+	height: 450px;
 	float: left;
 }
 
 #mapContainer {
-	margin-top: -15px;
-	width: 100%;
-	height: 390px;
+	margin-top: 20px;
+	width: 600px;
+	height: 450px;
 	border: 2px dashed #ccc;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -235,13 +235,18 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 	font-size: 1.0em;
 }
 
-#selectable .ui-selecting {
-	background: #FECA40;
+#selectable .ui-selected {
+	color: #333333;
 }
 
-#selectable .ui-selected {
-	background: #999966;
-	color: white;
+#selectable ul {
+	margin: 0px;
+	padding: 5px;
+	border-bottom: 2px dashed #ccc;
+}
+
+#selectable ul:hover {
+	background: #F0F0F0 ;
 }
 
 #selectable {

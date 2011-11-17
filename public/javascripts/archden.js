@@ -232,7 +232,7 @@ function ArchDen() {
 												map : map
 											});
 											churches++;
-											church.distance = dist;
+											church.distance = Math.round((dist / 1609)*100)/100;;
 											// console.log("Adding parish: "+
 											// church.nombre);
 											parishMarkers.push(marker);
@@ -266,7 +266,7 @@ function ArchDen() {
 									}
 									
 									document.getElementById('closest-church').textContent = 'Found '
-											+ churches + ' churches.';
+											+ churches + ' parishes.';
 
 								});
 				
@@ -330,25 +330,45 @@ function ArchDen() {
 		console.log("building result list");
 		archden.parishData = archden.parishData.sort(archden.compare);
 		$.each(archden.parishData, function (index, parish){
+			if(index == 0){
+				map.setCenter(parish.latlng);
+			}
 			var link = parish.website;
+			var school = parish.school_website;
 			if (!link) {
 				link = "";
 			}
+			if(!school){
+				school = "";
+			}
 			var html = ['<ul id="'+ index +'"><h2>', parish.nombre, '</h2>', 
-			            '<li>Address: ', parish.physicaladdress, ', ', parish.physicalzip, '</li>',
-			            '<li>Distance: ', parish.distance, '</li>',
-			            '<li>Pastor: ',parish.pastor, '</li>', 
-			            '<li>Sunday Masstimes: ', parish.sunday, '</li>',
-			            '<li>Anticipitory Masstimes: ', parish.saturday_anticipatory, '</li>',
-			            '<li>Website: ', link.link(parish.website), '</li>',
+			            '<li><b>Address:</b> ', parish.physicaladdress, ', ', parish.physicalzip, '</li>',
+			            '<li><b>Distance:</b> ', parish.distance, ' mi </li>',
 			            '<div id="details-' + index +'" style="display: none">',
-			            '<li>School: ', parish.grades, '</li>',
-			            '<li>Monday: ', parish.monday, '</li>',
-			            '<li>Tuesday: ', parish.tuesday, '</li>',
-			            '<li>Wednesday: ', parish.wednesday, '</li>',
-			            '<li>Thursday: ', parish.thursday, '</li>',
-			            '<li>Friday: ', parish.friday, '</li>',
-			            '<li>Saturday: ', parish.saturday, '</li>',
+			            '<li><b>Pastor:</b> ',parish.pastor, '</li>', 
+			            '<li><b>Sunday Masstimes:</b> ', parish.sunday, '</li>',
+			            '<li><b>Anticipitory Masstimes:</b> ', parish.saturday_anticipatory, '</li>',
+			            '<li><b>Adoration:</b> ', parish.adoration, '</li>',
+			            '<li><b>Website:</b> ', link.link(parish.website), '</li>',
+			            '<li><b>School:</b> ', parish.grades, '</li>',
+			            '<li><b>School Website:</b> ', school.link(parish.school_website), '</li>',
+			            '<br/>',
+			            '<li><b>Monday Masses:</b> ', parish.monday, '</li>',
+			            '<li><b>Tuesday Masses:</b> ', parish.tuesday, '</li>',
+			            '<li><b>Wednesday Masses:</b> ', parish.wednesday, '</li>',
+			            '<li><b>Thursday Masses:</b> ', parish.thursday, '</li>',
+			            '<li><b>Friday Masses:</b> ', parish.friday, '</li>',
+			            '<li><b>Saturday Masses:</b> ', parish.saturday, '</li>',
+			            '<br/>',
+			            '<li><b>Saturday Confession:</b> ', parish.saturday_confessions, '</li>',
+			            '<li><b>Monday Confession:</b> ', parish.monday_confessions, '</li>',
+			            '<li><b>Tuesday Confession:</b> ', parish.tuesday_confessions, '</li>',
+			            '<li><b>Wednesday Confession:</b> ', parish.wednesday_confessions, '</li>',
+			            '<li><b>Thursday Confession:</b> ', parish.thursday_confessions, '</li>',
+			            '<li><b>Friday Confession:</b> ', parish.friday_confessions, '</li>',
+			            '<br/>',
+			            '<li><b>Phone:</b> ', parish.phone1, '</li>',
+			            '<li><b>Fax:</b> ', parish.fax, '</li>',
 			            '</div>',
 			            '</ul>' ].join('');
 			
