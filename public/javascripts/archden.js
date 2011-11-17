@@ -6,7 +6,7 @@ var inputFieldEl = document.getElementById('position');
 var withinEl = document.getElementById('within');
 
 var parishMarkers = [];
-
+var image = 'public/images/church2.png';
 
 
 function uniqueArr(ar) {
@@ -229,7 +229,8 @@ function ArchDen() {
 										if (dist < (archden.radius * 1609)) {
 											var marker = new google.maps.Marker({
 												position : church.latlng,
-												map : map
+												map : map,
+												icon: image
 											});
 											churches++;
 											church.distance = Math.round((dist / 1609)*100)/100;;
