@@ -93,10 +93,10 @@
 		archden.confession = $('input#confession:checked').val();
 		archden.topic = $('input#topic:checked').val();
 
-		console.log("Confession: " + archden.confession);
+		debug.log("Confession: " + archden.confession);
 		if (archden.location) {
 			archden.location = archden.location + ', CO';
-			console.log("using location:" + archden.location);
+			debug.log("using location:" + archden.location);
 			archden.getGeo();
 		} else {
 			archden.queryCassandraHq();
@@ -123,7 +123,7 @@
 		$("#selectable").selectable({
 			selected : function(event, ui) {
 				var id = ui.selected.id;
-				console.log("ID: " + id);
+				debug.log("ID: " + id);
 				$('#details-' + id).show('slow', function() {
 					
 				});

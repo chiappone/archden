@@ -20,7 +20,7 @@ function uniqueArr(ar) {
 
 function resetMap() {
 	closestJob = null;
-	document.getElementById('closest-church').textContent = 'Searching...';
+	$('#closest-church').text('Searching...');
 	clearOverlays();
 	map.setCenter(here.pos);
 }
@@ -34,7 +34,7 @@ function clearOverlays() {
 }
 
 function initialize() {
-	console.log("init search");
+	debug.log("init search");
 	var myOptions = {
 		zoom : 6,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
@@ -126,7 +126,7 @@ function ArchDen() {
 	this.parishData = [];
 	
 	this.getGeo = function() {
-		console.log("Geocoding: " + archden.location + " radius: " + archden.radius);
+		debug.log("Geocoding: " + archden.location + " radius: " + archden.radius);
 		geocoder.geocode({
 			'address' : archden.location
 		}, function(results, status) {
@@ -136,9 +136,9 @@ function ArchDen() {
 				here.pos = results[0].geometry.location;
 				archden.findNearbyParishes(here.pos);
 			} else {
-				console.log("Unable to geocode.")
-				alert("Geocode was not successful for the following reason: "
-						+ status);
+				debug.log("Unable to geocode.")
+				//alert("Geocode was not successful for the following reason: "
+				//		+ status);
 			}
 		});
 	};
@@ -160,17 +160,17 @@ function ArchDen() {
 					archden.queryCassandraHq();
 				}
 			} else {
-				alert("Geocoder failed due to: " + status);
+				//alert("Geocoder failed due to: " + status);
 			}
 		});
 	}
 	
 	this.queryCassandraHq = function() {
-		
-		console.log("Address: " + archden.address);
-		console.log("Radius: " + archden.radius);
+		$('#closest-church').text('Searching...');
+		debug.log("Address: " + archden.address);
+		debug.log("Radius: " + archden.radius);
 		if(archden.parishData){
-			console.log("emptying array");
+			debug.log("emptying array");
 			archden.parishData = [];
 		}
 		var churches = 0;
@@ -194,7 +194,7 @@ function ArchDen() {
 			q = [ '/search?topic='+ archden.topic ];
 		}
 		
-		console.log("Query: "+ q);
+		debug.log("Query: "+ q);
 		
 		clearOverlays();
 		var xhr = new XMLHttpRequest();
@@ -202,12 +202,12 @@ function ArchDen() {
 			if (this.readyState == 4 && this.status == 200) {
 				var resp = jQuery.parseJSON(this.responseText);
 				if (!resp.members) {
-					document.getElementById('closest-church').textContent = 'Nothing found, try searching.';
+					$('#closest-church').text('No Results Found.');
 					return;
 				}
 
 				var newBounds = new google.maps.LatLngBounds();
-				console.log(resp.members);
+				debug.log(resp.members);
 				$
 						.each(
 								resp.members,
@@ -234,7 +234,7 @@ function ArchDen() {
 											});
 											churches++;
 											church.distance = Math.round((dist / 1609)*100)/100;;
-											// console.log("Adding parish: "+
+											// debug.log("Adding parish: "+
 											// church.nombre);
 											parishMarkers.push(marker);
 											archden.parishData.push(church);
@@ -255,19 +255,15 @@ function ArchDen() {
 																$(
 																		'table#mass-times')
 																		.show();
-																document
-																		.getElementById('closest-church').textContent = 'Found '
-																		+ churches
-																		+ ' churches. - '
-																		+ church.nombre;
+																$('#closest-church').text('Found '+ churches +' parishes.');
 															});
 
 											newBounds.extend(church.latlng);
 										}
 									}
 									
-									document.getElementById('closest-church').textContent = 'Found '
-											+ churches + ' parishes.';
+					
+									$('#closest-church').text('Found '+ churches +' parishes.');
 
 								});
 				
@@ -277,8 +273,9 @@ function ArchDen() {
 					archden.radius = rad;
 					$('input#radius').val(rad);
 					archden.queryCassandraHq();
+					$('#closest-church').text('Expanding Search Radius.');
 				}
-				
+			
 				
 				archden.parishNames = uniqueArr(archden.parishNames);
 				
@@ -302,8 +299,6 @@ function ArchDen() {
 				 * .round(closestJob.latlng.distanceFrom(here.pos) / 1609), ' miles
 				 * away - ', closestJob.title ].join('');
 				 */
-			}else{
-				document.getElementById('closest-church').textContent = 'No Results Found.';
 			}
 		};
 		xhr.open('GET', q);
@@ -328,7 +323,7 @@ function ArchDen() {
 	}
 	
 	this.buildResultList = function(){
-		console.log("building result list");
+		debug.log("building result list");
 		archden.parishData = archden.parishData.sort(archden.compare);
 		$.each(archden.parishData, function (index, parish){
 			if(index == 0){
