@@ -1,0 +1,601 @@
+p {
+	overflow: visible;
+	margin: 0px;
+}
+.content {
+	margin: 0px;
+}
+/* Global Styles__________________________________________________________*/
+* {
+	margin: 0px;
+	/*	padding: 0px; */
+	color: #343434;
+}
+#newsDiv {
+	padding: 0px;
+	margin: 0px;
+}
+#newsDiv hr {
+	height: 1px;
+	color: #999999;
+}
+a {
+	color:#003333;
+	text-decoration: none;
+}
+a:hover {
+	/*color: #535353;*/
+	text-decoration: underline;
+}
+img {
+	border: none;
+}
+ul, li {
+	list-style: none;
+	padding: 0px;
+}
+li a {
+	text-decoration: none;
+}
+#clear {
+	clear: both;
+}
+#body {
+	font: normal 11px/18px Verdana, Arial;
+	text-align: left;
+	text-decoration: none;
+	background: #cfd1c2;
+	margin: 10px 0 0px 0;
+}
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}
+/*filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;*/
+	
+/* Main Con__________________________________________________________*/
+#mainNavCon {
+	position: relative;
+	margin: 0 auto;
+	background: url(http://www.archden.org/images/bodybg.jpg) repeat-y top center;
+	width: 980px;
+	padding: 0 8px;
+}
+#titleCon {
+	position: relative;
+	float: left;
+	clear: both;
+	width: 980px;
+	overflow: hidden;
+	height: 70px;
+}
+#titleCon img {
+	max-width: 100%;
+}
+/* Main Menu Con__________________________________________________________*/
+#mainNavTopMenuCon {
+	position: relative;
+	float: left;
+	clear: both;
+	height: 22px;
+	width: 980px;
+	background-color: #475d3c;
+	border-top: 1px solid #8ca281;
+}
+#mainNavTopMenuCon ul {
+	position: relative;
+	margin: 0 auto;
+	width: 960px;
+	font-family: Arial;
+}
+#mainNavTopMenuCon ul li {
+	float: left;
+	height: 21px;
+	padding-top: 1px;
+}
+#mainNavTopMenuCon ul li a {
+	color: #fff;
+	padding: 0px 11px 0 11px;
+	font-weight: bold;
+	display: block;
+}
+#mainNavTopMenuCon ul li a:hover, #mainNavTopMenuCon ul li a:active, #mainNavTopMenuCon ul li.active a:hover {
+	color: #cccc99;
+	text-decoration: none;
+}
+#mainNavTopSubMenuCon {
+	position: relative;
+	float: left;
+	clear: both;
+	height: 22px;
+	width: 980px;
+	background-color: #8b9477;
+}
+#mainNavTopSubMenuCon .quickLinks {
+	float: left;
+	width: 120px;
+	color: #ffffcc;
+	font-size: 10px;
+	margin: 2px 0 0 12px;
+	_margin: 2px 0 0 6px;
+}
+#mainNavTopSubMenuCon ul {
+	float: left;
+}
+#mainNavTopSubMenuCon ul li {
+	float: left;
+	height: 21px;
+	padding-top: 1px;
+}
+#mainNavTopSubMenuCon ul li a {
+	color: #003300;
+	padding: 0 6px;
+}
+#mainNavTopSubMenuCon ul li a:hover {
+	text-decoration: none;
+	color: #ffffcc;
+}
+/* Base Con Colums__________________________________________________________*/
+#mainbgCon {
+	float: left;
+	width: 980px;
+	background: url(http://www.archden.org/images/matternavmainbg.jpg) repeat-y left top;
+}
+/* Left Colums__________________________________________________________*/
+#leftColmNav {
+	padding: 0px;
+	position: relative;
+	float: left;
+	width: 162px;
+}
+#searchNav {
+	padding: 0px;
+	clear: left;
+	background: url(http://www.archden.org/images/leftsearchbg.jpg) no-repeat left top;
+	width: 162px;
+	height: 66px;
+	overflow: hidden;
+}
+#searchNav .head {
+	padding: 0px;
+	float: left;
+	clear: both;
+	width: 152px;
+	height: 16px;
+	margin: 3px 0 0 10px;
+	color: #fff;
+	font-weight: bold;
+}
+#searchNav .input {
+	padding: 0px;
+	float: left;
+	clear: left;
+	width: 100%;
+	font-size: 9px;
+	margin-top: 4px;
+}
+#searchNav .input p {
+	padding: 0px;
+	float: left;
+	color: #fff;
+}
+#searchNav input {
+	height: 16px;
+	float: left;
+	width: 115px;
+	margin: 0 0 0 8px;
+	padding: 0px;
+	border: 0;
+	font-size: 10px;
+	padding: 3px 0 0 5px;
+}
+#searchNav input.button {
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	cursor: pointer;
+	color: #fff;
+	font-size: 0px;
+	font-family: Arial;
+	background: url(http://www.archden.org/images/button_go.jpg) no-repeat left;
+}
+#searchNav input.radio {
+	padding: 0px;
+	width: 15px;
+	height: 15px;
+	float: left;
+	margin: 0 0 0 7px;
+}
+#leftColmNav h3 {
+	float: left;
+	width: 162px;
+	height: 20px;
+	background-color: #475D39;
+	font-size: 10px;
+	padding: 0px;
+	color: #fff;
+}
+#leftColmNav ul strong {
+	padding: 0px;
+	color: #003300;
+}
+#leftColmNav .calendar {
+	padding: 0px;
+	width: 100%;
+	text-align: center;
+}
+/* Center Colums__________________________________________________________*/
+#cenColmNav {
+	position: relative;
+	float: left;
+	width: 658px;
+}
+#cenColmNav .titlepic {
+	float: left;
+	clear: both;
+	height: 86px;
+	width: 658px;
+	margin-bottom: 10px;
+}
+#cenColmNav a {
+	text-decoration: underline;
+	color:#003333;
+}
+#cenColmNav a:hover {
+	text-decoration: none;
+}
+#cenColmNav .head {
+	font-family: "Times New Roman", Times, serif;
+	font-size:19px;
+	font-weight: normal;
+	line-height: 22px;
+	color: #003333;
+	width: 100%;
+	padding:0;
+	margin-top:5px;
+	letter-spacing: .5pt;
+}
+#cenColmNav p {
+	margin: 5px 0 6px 0;
+	text-align: left;
+	line-height: 14px;
+	padding-bottom:5px;
+}
+#cenColmNav UL LI {
+	clear: both;
+	list-style: disc;
+	list-style-position: outer;
+}
+#cenColmNav .mainMatterCon UL LI {
+	margin-left:40px;
+	clear: both;
+	list-style: disc;
+	list-style-position: outer;
+}
+#cenColmNav .mainMatterCon {
+	font-size:11px;
+}
+#cenColmNav .mainMatterCon h2 {
+	width: 100%;
+	clear: both;
+	font-size: 14px;
+	line-height:16px;
+	font-family: Arial;
+	color: #003333;
+	border-bottom: 1px solid #9d9d9d;
+}
+#cenColmNav .mainMatterCon.padding {
+	padding: 10px 10px 10px 10px;
+	width: 614px;
+}
+#cenColmNav .mainMatterCon .leftcolum {
+	width: 300px;
+	padding: 0 0 0 16px;
+	border-left: 1px solid #999999;
+}
+#cenColmNav .mainMatterCon .leftcolumNoborder {
+	float: left;
+	border: 0;
+	padding: 0 16px 0 0;
+}
+#cenColmNav .topimgCon {
+	float: left;
+	width: 302px;
+	clear: both;
+	margin: 5px 0 10px 0;
+	line-height:16px;
+}
+#cenColmNav .topimgCon img {
+	max-width: 100%;
+}
+#cenColmNav .bottomMatterCon {
+	border-top: 1px solid #999999;
+}
+#cenColmNav .bottomMatterCon .imageCon {
+	float: left;
+	width: 87px;
+	margin: 10px 15px 12px 0px;
+}
+#cenColmNav .bottomMatterCon .imageCon img {
+	max-width: 100%;
+}
+#cenColmNav .bottomMatterCon p {
+	width: 82%;
+}
+#cenColmNav .bottomMatterCon .head {
+	width: 82%;
+	clear: none;
+	margin: 8px 0 0 0;
+}
+/* Right Colums__________________________________________________________*/
+#rightColmNav {
+	position: relative;
+	float: left;
+	width: 159px;
+}
+#topCornerCon {
+	width: 160px;
+	float: left;
+}
+#topCornerCon .head a {
+	font-weight: bold;
+	float: left;
+	clear: both;
+	width: 160px;
+	height: 20px;
+	font-family: Arial;
+	color: #fff;
+	text-align: center;
+	background: url(http://www.archden.org/images/righttopmenu_headbg.jpg) no-repeat left;
+}
+#topCornerCon ul {
+	padding-left: 0px;
+	float: left;
+	width: 160px;
+	font-size: 10px;
+}
+#topCornerCon ul li {
+	float: left;
+	clear: left;
+	width: 160px;
+	height: 21px;
+	background: url(http://www.archden.org/images/righttopmenu_libg.jpg) no-repeat left;
+}
+#topCornerCon ul li.bottom {
+	background: url(http://www.archden.org/images/righttopmenu_btmli_bg.jpg) no-repeat left;
+	width: 160px;
+	height: 20px;
+}
+#topCornerCon ul li .img {
+	float: left;
+	width: 20px;
+	padding-left: 5px;
+}
+#topCornerCon ul li .img img {
+	max-width: 100%;
+}
+#topCornerCon ul a {
+	color: #fff;
+	float: left;
+	margin-left: 8px;
+}
+#rightColmNav h3 {
+	float: left;
+	clear: left;
+	width: 160px;
+	/*height: 19px;*/
+	border-bottom: 1px solid #475d3c;
+	color: #003300;
+	text-align: center;
+	font-size: 11px;
+	padding: 2px 0 1px 0;
+	overflow: hidden;
+	background: url(http://www.archden.org/images/rightheadingbg.jpg) repeat-y left top;
+}
+#rightColmNav .imgCon {
+	float: left;
+	clear: both;
+	height: auto;
+	width: 150px;
+	border-bottom: 1px solid #999999;
+	text-align: center;
+	padding: 8px 0;
+	margin: 0 0 0 5px;
+	_margin: 0 0 0 3px;
+}
+#rightColmNav .imgCon.bottom {
+	border: 0;
+}
+#rightColmNav .imgCon img {
+	max-width: 100%;
+}
+#rightColmNav .calendarCon {
+	text-align: center;
+	float: left;
+	clear: both;
+	width: 100%;
+	margin: 12px 0 0px 0;
+}
+#rightColmNav .boxnav {
+	width: 100px;
+	position: relative;
+	float: left;
+	text-align: center;
+	border: 1px solid #336633;
+	padding: 4px;
+	margin: 12px 0 0 18px;
+	_margin: 12px 0 0 9px;
+	background: url(http://www.archden.org/images/right_boxbg.jpg) repeat-y left top;
+}
+#rightColmNav .boxnav a {
+	color: #003300;
+	font-size: 10px;
+}
+/* Bootom Con__________________________________________________________*/
+#bottomCon {
+	position: relative;
+	margin: 0 auto;
+	width: 974px;
+	height: 17px;
+	text-align: right;
+	font-size: 10px;
+	color: #003300;
+	padding: 0 14px 13px 8px;
+	background: url(http://www.archden.org/images/bottombg.jpg) no-repeat left top;
+}
+#bottomCon a {
+	color: #003300;
+}
+.cf:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.cf {
+	display:inline-block;
+}
+/* Holly Hack Targets IE Win only \*/
+   * html .cf {
+	height: 1%;
+}
+.cf {
+	display: block;
+}
+/* End Holly Hack */		
+
+/*
+@media print {
+#rightColmNav {
+display:hidden;
+}
+}*/
+		
+		
+/* Jorge's styles */
+
+ .Header {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	line-height: 15pt;
+	font-weight: bold;
+	font-variant: normal;
+	color: #003333;
+	text-decoration: underline;
+}
+.HeaderSub {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 15pt;
+	color: #666666;
+	text-align: left;
+}
+.ContentMain {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	line-height: 14px;
+	font-weight: normal;
+	font-variant: normal;
+	color: #343434;
+	text-align: left;
+}
+.ContentMain p {
+	padding-top:5px;
+}
+.NewsHeadlinesMedium {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 17px;
+	line-height: 18px;
+	font-weight: bold;
+	color: #003333;
+	text-align: left;
+	font-variant: normal;
+}
+.NewsHeadlinesLarge {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 21px;
+	line-height: 20px;
+	font-weight: normal;
+	color: #003333;
+	text-align: left;
+	font-variant: normal;
+}
+.ContentFootnote {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #666666;
+	font-style: italic;
+	line-height: 10px;
+	font-weight: normal;
+	font-variant: normal;
+	text-align: left;
+}
+.Parent {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: uppercase;
+	color: #003333;
+	text-align: left;
+}
+.PageName {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	color: #003333;
+	text-align: left;
+	letter-spacing: 1px;
+}
+.DCR_Headlines {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	line-height: 24px;
+	font-weight: normal;
+	color: #003333;
+	text-align: left;
+}
+.DCR_ContentList {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 16px;
+	font-weight: normal;
+	text-align: left;
+	list-style-position: outside;
+	list-style-type: none;
+}
+.ContentMainJustified {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 13px;
+	color: #343434;
+	text-align: justify;
+}
+
+.newstitle {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight: bold;
+	line-height: 16px;
+	color: #003333;
+	width: 100%;
+	padding:0;
+	margin-top: 5px;
+}

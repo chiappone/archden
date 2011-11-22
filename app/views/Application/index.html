@@ -11,43 +11,52 @@
 				<p class="location">
 					<label for="location">Enter an address, zip code, or city
 						to search</label> <br /> <input type="text" name="location"
-						id="location" size="40" /> <input type="text" name="radius"
+						id="location" size="30" /> <input type="text" name="radius"
 						id="radius" value="3" /><label for="radius">Radius</label>
 				</p>
 				<p class="name">
 					<label for="name"> Or search by Parish name </label><br /> <input
-						id="name" size="40" />
+						id="name" size="30" />
 				</p>
 				<p class="refine">
 					<label for="refine" id="refine" style="cursor: pointer;">
 						Refine your search </label>
 				<div id="more" style="display: none">
-					<label for="dow"> Day of Week </label> <select class="dow" id="dow">
+					<label for="dow" class="select-label"> Day of Week </label> <select class="dow" id="dow">
 						<option>Sunday</option>
-						<option>Anticipitory</option>
+						<option value="saturdayanticipatory">Anticipitory</option>
 						<option>Saturday</option>
 						<option>Weekday</option>
-					</select> <label for="tod"> Time of Day </label> <select class="tod"
+						<option value="holydays">Holy Day</option>
+					</select> 
+					<br/>
+					<label for="tod" class="select-label"> Time of Day </label> <select class="tod"
 						id="tod">
 						<option>Any</option>
 						<option>Morning</option>
 						<option>Noon</option>
 						<option>Afternoon</option>
-					</select> <br /> <label for="confession"> Search only confessions </label> <input
-						name="confession" id="confession" value="confession"
-						type="checkbox" /> <br />
-					<p>
-						<label>Topics</label>
-					</p>
-					<input name="topic" id="topic" value="adoration" type="radio" /> <label>
-						Adoration </label> <br /> <input name="topic" id="topic"
-						value="spanish sunday" type="radio" /> <label> Spanish
-						Sunday</label> <br /> <input name="topic" id="topic"
-						value="spanish weekday" type="radio" /> <label> Spanish
-						Weekday</label> <br /> <input name="topic" id="topic"
-						value="life teen/youth mass" type="radio" /> <label> Life
-						Teen</label> <br /> <input name="topic" id="topic" value="school"
-						type="radio" /> <label> Have Schools </label>
+					</select> <br /> 
+					
+					<label for="tos" class="select-label"> Service Type </label> <select class="tos"
+						id="tos">
+						<option>Mass</option>
+						<option value='life teen/youth mass'>Life Teen Mass</option>
+						<option>Confession</option>
+						<option>Adoration</option>
+						<option>Seasonal</option>
+					</select> <br /> 
+					
+					<label for="lang" class="select-label"> Language </label> <select class="lang"
+						id="lang">
+						<option value = 'english'>English</option>
+						<option value = 'spanish sunday'>Spanish</option>
+						<option value = 'novo order latin'>Latin</option>
+						<option value = 'korean'>Korean</option>
+						<option value = 'vietnamese'>Vietnamese</option>
+						<option value = 'asl'>ASL/Sign Language</option>
+					</select> <br /> 
+					
 				</div>
 
 				<div id="disp"></div>
@@ -87,13 +96,30 @@
 	function searchByTime() {
 		archden.tod = $("#tod").val();
 		archden.dow = $("#dow").val();
+		archden.tos = $("#tos").val();
+		archden.lang = $("#lang").val();
 		archden.location = $('input#location').val();
 		archden.radius = $('input#radius').val();
 		archden.name = $('input#name').val();
-		archden.confession = $('input#confession:checked').val();
-		archden.topic = $('input#topic:checked').val();
+		if(archden.tos == 'Confession'){
+			archden.confession = true;
+		}else{
+			archden.confession = false;
+		}
+		
+		if(archden.lang == 'english'){
+			archden.topic = null;
+		}else{
+			archden.topic = archden.lang;
+		}
+		
+		if(archden.tos == 'Adoration'){
+			archden.topic = 'adoration';
+		}else if(archden.tos == "life teen/youth mass"){
+			archden.topic = 'life teen/youth mass';
+		}
 
-		debug.log("Confession: " + archden.confession);
+		debug.log("Service Type: " + archden.tos);
 		if (archden.location) {
 			archden.location = archden.location + ', CO';
 			debug.log("using location:" + archden.location);

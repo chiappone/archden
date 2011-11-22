@@ -98,7 +98,6 @@ function search(){
 	queryCassandraHq('','', 500, dow, tod);
 }
 
-// Need to integrate these into main archden class
 
 function get(k) {
 	return church[k];
@@ -121,6 +120,8 @@ function ArchDen() {
 	this.name = null;
 	this.dow = null;
 	this.tod = null;
+	this.tos = null;
+	this.lang = null;
 	this.here = {};
 	this.parishNames = [];
 	this.parishData = [];
@@ -275,7 +276,10 @@ function ArchDen() {
 					archden.queryCassandraHq();
 					$('#closest-church').text('Expanding Search Radius.');
 				}
-			
+				
+				if(churches == 0){
+					$('#closest-church').text('No results found.');
+				}
 				
 				archden.parishNames = uniqueArr(archden.parishNames);
 				
@@ -337,9 +341,80 @@ function ArchDen() {
 			if(!school){
 				school = "";
 			}
+
+			var topic = '<li><b>Sunday Masstimes: </b> ';
+			topic += parish.sunday;
+			topic += '</li>';
+			if(archden.dow){
+				if(archden.dow == 'saturdayanticipatory'){
+					topic = '<li><b>Anticipitory Masstimes: </b> ';
+					topic += parish.saturday_anticipatory;
+					topic += '</li>';
+				}
+				if(archden.dow == 'Saturday'){
+					topic = '<li><b>Saturday Masstimes: </b> ';
+					topic += parish.saturday;
+					topic += '</li>';
+				}
+				if(archden.dow == 'holydays'){
+					topic = '<li><b>Holy Day Masstimes: </b> ';
+					topic += parish.holy_days;
+					topic += '</li>';
+				}
+				if(archden.dow == 'Weekday'){
+					topic = '<li><b>Monday Masses:</b> '+ parish.monday + '</li>';
+		            topic += '<li><b>Tuesday Masses:</b> '+ parish.tuesday + '</li>';
+		            topic += '<li><b>Wednesday Masses:</b> '+ parish.wednesday + '</li>';
+		            topic += '<li><b>Thursday Masses:</b> '+ parish.thursday + '</li>';
+		            topic += '<li><b>Friday Masses:</b> '+ parish.friday + '</li>';
+		            topic += '<li><b>Saturday Masses:</b> '+ parish.saturday + '</li>';
+				}
+			}
+			if(archden.topic){
+				if(archden.topic == 'adoration'){
+					topic = '<li><b>Adoration: </b> ';
+					topic += parish.adoration;
+					topic += '</li>';
+				}
+				if(archden.topic == 'life teen/youth mass'){
+					topic = '<li><b>Life Teen: </b> ';
+					topic += '';
+					topic += '</li>';
+					debug.log(parish);
+				}
+				if(archden.topic == 'spanish sunday'){
+					topic = '<li><b>Spanish Masstimes: </b> ';
+					topic += parish.spanish_sunday;
+					topic += '</li>';
+				}
+				if(archden.topic == 'novo order latin'){
+					topic = '<li><b>Latin Masstimes: </b> ';
+					topic += parish.novo_order_latin;
+					topic += '</li>';
+				}
+				if(archden.topic == 'korean'){
+					topic = '<li><b>Korean Masstimes: </b> ';
+					topic += parish.korean;
+					topic += '</li>';
+				}
+				if(archden.topic == 'vietnamese'){
+					topic = '<li><b>Vietnamese Masstimes: </b> ';
+					topic += parish.vietnamese;
+					topic += '</li>';
+				}
+				if(archden.topic == 'asl'){
+					topic = '<li><b>ASL Masstimes: </b> ';
+					topic += parish.asl;
+					topic += '</li>';
+				}	
+			}
+			
+			
 			var html = ['<ul id="'+ index +'"><h2>', parish.nombre, '</h2>', 
 			            '<li><b>Address:</b> ', parish.physicaladdress, ', ', parish.physicalzip, '</li>',
 			            '<li><b>Distance:</b> ', parish.distance, ' mi </li>',
+			            topic,
+			            
 			            '<div id="details-' + index +'" style="display: none">',
 			            '<li><b>Pastor:</b> ',parish.pastor, '</li>', 
 			            '<li><b>Sunday Masstimes:</b> ', parish.sunday, '</li>',

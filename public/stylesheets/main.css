@@ -125,9 +125,15 @@ hgroup h1 {
 	display: inline;
 }
 
+.select-label {
+	
+	width: 15px;
+	
+}
+
 #search-area {
 	margin-top: 0px;
-	width: 420px;
+	width: 320px;
 	height: 450px;
 	float: left;
 }
@@ -176,16 +182,21 @@ hgroup h1 {
 }
 
 #closest-church {
-	margin-left: 39%;
-	margin-bottom: 20px;
+	margin-left: 0%;
+	margin-bottom: 0px;
 	font-weight: bold;
-	float: right;
+	float: left;
 }
 
 #nearest {
 	margin-bottom: 12px;
 	color: #666666;
 }
+
+#refine {
+	font-weight: bold;
+}
+
 
 #num-results {
 	font-weight: bold;
@@ -212,6 +223,10 @@ textarea {
 	line-height: 150%;
 }
 
+select {
+	margin-left: 10px;
+}
+
 input:hover,textarea:hover,input:focus,textarea:focus {
 	border-color: #C9C9C9;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
@@ -229,7 +244,9 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 	border: 0;
 	font-size: 14px;
 	color: #FFFFFF;
+	float: right;
 }
+
 
 #feedback {
 	font-size: 1.0em;

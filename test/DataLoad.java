@@ -42,7 +42,7 @@ public class DataLoad extends UnitTest {
     				}
     			}
     			analyzeData(params);
-    			sendLocationRequest(params);
+    			//sendLocationRequest(params);
     		}
     	}
     	
@@ -79,6 +79,10 @@ public class DataLoad extends UnitTest {
     		}else if(hs.contains("saturdayanticipatory")){
     			sendMasstimeRequest(parishid, hs, (String) e.getValue(), params);
     		}else if(hs.contains("sunday")){
+    			sendMasstimeRequest(parishid, hs, (String) e.getValue(), params);
+    		}else if(hs.contains("holydays")){
+    			sendMasstimeRequest(parishid, hs, (String) e.getValue(), params);
+    		}else if(hs.contains("holydayanticipated")){
     			sendMasstimeRequest(parishid, hs, (String) e.getValue(), params);
     		}
     	}

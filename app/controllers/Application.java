@@ -23,6 +23,10 @@ public class Application extends Controller {
 	public static void index() {
 		render();
 	}
+	
+	public static void archden() {
+		render();
+	}
 
 	public static void plotAllLocations() {
 		Logger.info("Plotting all locations");
@@ -85,10 +89,6 @@ public class Application extends Controller {
 				operator = "GT";
 			}
 
-			if (dayofweek.equalsIgnoreCase("Anticipitory")) {
-				dayofweek = "saturdayanticipatory";
-			}
-
 			dayofweek = dayofweek.toLowerCase();
 
 			if (confession) {
@@ -120,6 +120,7 @@ public class Application extends Controller {
 
 			Collection<Map<String, String>> results = retMap.values();
 			int i = 1;
+			topic = topic.toLowerCase();
 			for (Map<String, String> result : results) {
 
 				Logger.info("Topic: " + topic);
