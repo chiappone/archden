@@ -196,8 +196,6 @@ function ArchDen() {
 					// Default query
 					archden.queryCassandraHq();
 				}
-			} else {
-				// alert("Geocoder failed due to: " + status);
 			}
 		});
 	}
@@ -245,7 +243,7 @@ function ArchDen() {
 				}
 
 				var newBounds = new google.maps.LatLngBounds();
-				//debug.log(resp.members);
+				// debug.log(resp.members);
 				$.each(
 						resp.members,
 						function(key, value) {
@@ -316,8 +314,9 @@ function ArchDen() {
 					$('#closest-church').text('No results found.');
 				}
 
-				archden.parishNames = uniqueArr(archden.parishNames);
-
+				archden.parishNames = uniqueArr(archden.parishNames).sort();
+				
+				
 				$('#name').autocomplete({
 					source : archden.parishNames
 				});
@@ -344,6 +343,7 @@ function ArchDen() {
 	
 	this.buildDataset = function(church, key, value) {
 		key = key.replace(/ /g, "_");
+		key = key.replace(/\//g, "_");
 		switch (key) {
 
 		case 'coordinates':
@@ -362,153 +362,17 @@ function ArchDen() {
 	this.buildResultList = function() {
 		debug.log("building result list");
 		archden.parishData = archden.parishData.sort(archden.compare);
+		
 		$.each(archden.parishData,
 				function(index, parish) {
 					if (index == 0) {
 						map.setCenter(parish.latlng);
 					}
-					var link = parish.website;
-					var school = parish.school_website;
-					if (!link) {
-						link = "";
-					}
-					if (!school) {
-						school = "";
-					}
 					
-					var results = archden.resultListHTML(parish);
+					var results = archden.resultListHTML(parish, index);
 					$('#mapresults').append(results);
-					
-					/*
-					var topic = '<li><b>Sunday Masstimes: </b> ';
-					topic += parish.sunday;
-					topic += '</li>';
-					if (archden.dow) {
-						if (archden.dow == 'saturdayanticipatory') {
-							topic = '<li><b>Anticipatory Masstimes: </b> ';
-							topic += parish.saturday_anticipatory;
-							topic += '</li>';
-						}
-						if (archden.dow == 'Saturday') {
-							topic = '<li><b>Saturday Masstimes: </b> ';
-							topic += parish.saturday;
-							topic += '</li>';
-						}
-						if (archden.dow == 'holydays') {
-							topic = '<li><b>Holy Day Masstimes: </b> ';
-							topic += parish.holy_days;
-							topic += '</li>';
-						}
-						if (archden.dow == 'Weekday') {
-							topic = '<li><b>Monday Masses:</b> '
-									+ parish.monday + '</li>';
-							topic += '<li><b>Tuesday Masses:</b> '
-									+ parish.tuesday + '</li>';
-							topic += '<li><b>Wednesday Masses:</b> '
-									+ parish.wednesday + '</li>';
-							topic += '<li><b>Thursday Masses:</b> '
-									+ parish.thursday + '</li>';
-							topic += '<li><b>Friday Masses:</b> '
-									+ parish.friday + '</li>';
-							topic += '<li><b>Saturday Masses:</b> '
-									+ parish.saturday + '</li>';
-						}
-					}
-					if (archden.topic) {
-						if (archden.topic == 'adoration') {
-							topic = '<li><b>Adoration: </b> ';
-							topic += parish.adoration;
-							topic += '</li>';
-						}
-						if (archden.topic == 'life teen/youth mass') {
-							topic = '<li><b>Life Teen: </b> ';
-							topic += '';
-							topic += '</li>';
-							debug.log(parish);
-						}
-						if (archden.topic == 'spanish sunday') {
-							topic = '<li><b>Spanish Masstimes: </b> ';
-							topic += parish.spanish_sunday;
-							topic += '</li>';
-						}
-						if (archden.topic == 'novo order latin') {
-							topic = '<li><b>Latin Masstimes: </b> ';
-							topic += parish.novo_order_latin;
-							topic += '</li>';
-						}
-						if (archden.topic == 'korean') {
-							topic = '<li><b>Korean Masstimes: </b> ';
-							topic += parish.korean;
-							topic += '</li>';
-						}
-						if (archden.topic == 'vietnamese') {
-							topic = '<li><b>Vietnamese Masstimes: </b> ';
-							topic += parish.vietnamese;
-							topic += '</li>';
-						}
-						if (archden.topic == 'asl') {
-							topic = '<li><b>ASL Masstimes: </b> ';
-							topic += parish.asl;
-							topic += '</li>';
-						}
-					}
 
-					var html = [
-							'<ul id="' + index + '"><h2>',
-							parish.nombre,
-							'</h2>',
-							'<li><b>Address:</b> ',
-							parish.physicaladdress,
-							', ',
-							parish.physicalzip,
-							'</li>',
-							'<li><b>Distance:</b> ',
-							parish.distance,
-							' mi </li>',
-							topic,
-
-							'<div id="details-' + index
-									+ '" style="display: none">',
-							'<li><b>Pastor:</b> ', parish.pastor, '</li>',
-							'<li><b>Sunday Masstimes:</b> ', parish.sunday,
-							'</li>', '<li><b>Anticipatory Masstimes:</b> ',
-							parish.saturday_anticipatory, '</li>',
-							'<li><b>Adoration:</b> ', parish.adoration,
-							'</li>', '<li><b>Website:</b> ',
-							link.link(parish.website), '</li>',
-							'<li><b>School:</b> ', parish.grades, '</li>',
-							'<li><b>School Website:</b> ',
-							school.link(parish.school_website), '</li>',
-							'<br/>', '<li><b>Monday Masses:</b> ',
-							parish.monday, '</li>',
-							'<li><b>Tuesday Masses:</b> ', parish.tuesday,
-							'</li>', '<li><b>Wednesday Masses:</b> ',
-							parish.wednesday, '</li>',
-							'<li><b>Thursday Masses:</b> ', parish.thursday,
-							'</li>', '<li><b>Friday Masses:</b> ',
-							parish.friday, '</li>',
-							'<li><b>Saturday Masses:</b> ', parish.saturday,
-							'</li>', '<br/>',
-							'<li><b>Saturday Confession:</b> ',
-							parish.saturday_confessions, '</li>',
-							'<li><b>Monday Confession:</b> ',
-							parish.monday_confessions, '</li>',
-							'<li><b>Tuesday Confession:</b> ',
-							parish.tuesday_confessions, '</li>',
-							'<li><b>Wednesday Confession:</b> ',
-							parish.wednesday_confessions, '</li>',
-							'<li><b>Thursday Confession:</b> ',
-							parish.thursday_confessions, '</li>',
-							'<li><b>Friday Confession:</b> ',
-							parish.friday_confessions, '</li>', '<br/>',
-							'<li><b>Phone:</b> ', parish.phone1, '</li>',
-							'<li><b>Fax:</b> ', parish.fax, '</li>', '</div>',
-							'</ul>' ].join('');
-
-					$('#selectable').append(html);
-					*/
-
-				});
+		});
 
 		this.showDirections = function(lat, lng) {
 			var start = here.pos;
@@ -548,36 +412,260 @@ function ArchDen() {
 		return 0;
 	}
 	
-	this.resultListHTML = function(parish){
+	this.resultListHTML = function(parish, index){
 		var coords = parish.latlng.lat() + "," + parish.latlng.lng();
+		var topic = "";
+		var link = parish.website;
+		var school = parish.school_website;
+		if (!link) {
+			link = "";
+		}
+		if (!school) {
+			school = "";
+		}
 		
-		var	html = '<div class="churchpopup churchaddressblock1" id="searchResult1">';
-			//html += '<a id="churchaddressblockpointer1" class="churchaddressblockpointer" href="javascript:void(0);" rel="nofollow">';
-			//html += '<img id="resultImage1" class="marker_result" alt="Result1" src="https://shared.via.infonow.net/images/mapicons/blue1.png">';
-			//html += '</a>';
+		if (archden.dow) {
+			if (archden.dow == 'Sunday') {
+				topic += '<b>Sunday Masstimes: </b> ';
+				topic += parish.sunday;
+			}
+			if (archden.dow == 'saturdayanticipatory') {
+				topic += '<b>Anticipatory Masstimes: </b> ';
+				topic += parish.saturday_anticipatory;
+			}
+			if (archden.dow == 'Saturday') {
+				topic += '<b>Saturday Masstimes: </b> ';
+				topic += parish.saturday;
+			}
+			if (archden.dow == 'holydays') {
+				topic += '<b>Holy Day Masstimes: </b> ';
+				topic += parish.holy_days;
+			}
+			if (archden.dow == 'Weekday') {
+				topic += '<b>Monday Masses:</b> '
+						+ parish.monday + '</br>';
+				topic += '<b>Tuesday Masses:</b> '
+						+ parish.tuesday + '</br>';
+				topic += '<b>Wednesday Masses:</b> '
+						+ parish.wednesday + '</br>';
+				topic += '<b>Thursday Masses:</b> '
+						+ parish.thursday + '</br>';
+				topic += '<b>Friday Masses:</b> '
+						+ parish.friday + '</br>';
+				topic += '<b>Saturday Masses:</b> '
+						+ parish.saturday;
+			}
+		}
+		if (archden.topic) {
+			if (archden.topic == 'adoration') {
+				topic = '<b>Adoration: </b> ';
+				topic += parish.adoration;
+			}
+			if (archden.topic == 'life teen/youth mass') {
+				topic = '<b>Life Teen: </b> ';
+				topic += parish.life_teen_youth_mass;
+			}
+			if (archden.topic == 'spanish sunday') {
+				topic = '<b>Spanish Masstimes: </b> ';
+				topic += parish.spanish_sunday;
+			}
+			if (archden.topic == 'novo order latin') {
+				topic = '<b>Latin Masstimes: </b> ';
+				topic += parish.novo_order_latin;
+			}
+			if (archden.topic == 'korean') {
+				topic = '<b>Korean Masstimes: </b> ';
+				topic += parish.korean;
+			}
+			if (archden.topic == 'vietnamese') {
+				topic = '<b>Vietnamese Masstimes: </b> ';
+				topic += parish.vietnamese;
+			}
+			if (archden.topic == 'asl') {
+				topic = '<b>ASL Masstimes: </b> ';
+				topic += parish.asl;
+			}
+		}
+		
+		if(archden.confession) {
+			topic = '<b>Saturday Confession:</b> ';
+			topic += parish.saturday_confessions+ ' <br/>';
+			topic += '<b>Sunday Confession:</b> ';
+			topic += parish.sunday_confessions+ ' <br/>';
+			topic += '<b>Monday Confession:</b> ';
+			topic += parish.monday_confessions+ ' <br/>';
+			topic += '<b>Tuesday Confession:</b> ';
+			topic += parish.tuesday_confessions+ ' <br/>';
+			topic += '<b>Wednesday Confession:</b> ';
+			topic += parish.wednesday_confessions+ ' <br/>';
+			topic += '<b>Thursday Confession:</b> ';
+			topic += parish.thursday_confessions+ ' <br/>';
+			topic += '<b>Friday Confession:</b> ';
+			topic += parish.friday_confessions + ' <br/><br/>';
+		}
+		
+		if(topic)
+			topic = archden.findAndConverTime(topic);
+		
+		var	detailsLeft = '<b>Pastor:</b> '+ parish.pastor+ '<br/>';
+			detailsLeft += '<b>Sunday Masstimes:</b> '+parish.sunday;
+			detailsLeft += '<br/>'+ '<b>Anticipatory Masstimes:</b> ';
+			detailsLeft += parish.saturday_anticipatory+ '<br/>';
+			detailsLeft += '<b>Adoration:</b> '+ parish.adoration;
+			detailsLeft += '<br/>'+ '<b>Website:</b> ';
+			detailsLeft += link.link(parish.website)+ '<br/>';
+			detailsLeft += '<b>School:</b> '+ parish.grades+ '<br/>';
+			detailsLeft += '<b>School Website:</b> ';
+			detailsLeft += school.link(parish.school_website)+ '<br/>';
+			detailsLeft += '<br/>'+ '<b>Monday Masses:</b> ';
+			detailsLeft += parish.monday+ '</br>';
+			detailsLeft += '<b>Tuesday Masses:</b> '+ parish.tuesday;
+			detailsLeft += '<br/>'+ '<b>Wednesday Masses:</b> ';
+			detailsLeft += parish.wednesday + '<br/>';
+			detailsLeft += '<b>Thursday Masses:</b> '+ parish.thursday;
+			detailsLeft += '<br/>'+ '<b>Friday Masses:</b> ';
+			detailsLeft += parish.friday+ '<br/>';
+			detailsLeft += '<b>Saturday Masses:</b> '+ parish.saturday;
+			detailsLeft += '<br/>';
+			
+		detailsLeft =  archden.findAndConverTime(detailsLeft);
+				
+		var detailsRight = '<b>Saturday Confession:</b> ';
+			detailsRight += parish.saturday_confessions+ ' <br/>';
+			detailsRight += '<b>Sunday Confession:</b> ';
+			detailsRight += parish.sunday_confessions+ ' <br/>';
+			detailsRight += '<b>Monday Confession:</b> ';
+			detailsRight += parish.monday_confessions+ ' <br/>';
+			detailsRight += '<b>Tuesday Confession:</b> ';
+			detailsRight += parish.tuesday_confessions+ ' <br/>';
+			detailsRight += '<b>Wednesday Confession:</b> ';
+			detailsRight += parish.wednesday_confessions+ ' <br/>';
+			detailsRight += '<b>Thursday Confession:</b> ';
+			detailsRight += parish.thursday_confessions+ ' <br/>';
+			detailsRight += '<b>Friday Confession:</b> ';
+			detailsRight += parish.friday_confessions + ' <br/><br/>';
+			
+			
+		detailsRight = archden.findAndConverTime(detailsRight);
+		
+		detailsRight += '<b>Phone:</b> '+ parish.phone1+ '<br/>';
+		detailsRight += '<b>Fax:</b> '+ parish.fax+ '<br/>'+ '</div>';
+			
+		var	html = '<div class="churchpopup churchaddressblock1">';
+			// html += '<a id="churchaddressblockpointer1"
+			// class="churchaddressblockpointer" href="javascript:void(0);"
+			// rel="nofollow">';
+			// html += '<img id="resultImage1" class="marker_result"
+			// alt="Result1"
+			// src="https://shared.via.infonow.net/images/mapicons/blue1.png">';
+			// html += '</a>';
 			html += '<div class="fr wdth135 padtp15">';
 	        html += '</div>';
 	        html += '<div class="mapresulttop">';
 			html += '<h2>';
-			html += '<span class="hiddenText">' + parish.nombre +'</span>';
+			html += '<span onclick="expandDetails('+ index +')" >' + parish.nombre +'</span>';
 			html += '</h2>';
 	        html += '</div>';
-	        html += '<div class="mapresultleft">';
+	        html += '<div class="parishinfo">';
 	        html += parish.physicaladdress +' '+ parish.physicalzip +'<br/>'+  parish.phone1 +'<br/>'; 
+			html += parish.distance +' miles | ';
+			html += '<a href="javascript:void(0);" rel="nofollow" class="lnkblu" onclick="archden.showDirections('+ coords +')">Driving Directions</a>';
+			html += '<br/><span class="topic">'+ topic + '</span>';
+			html += '<br/>';
+			html += '</div>';
+	        
+	        html += '<div id="details-' + index +'" style="display: none">';
+	        html += '<div class="mapresultleft">';
+	        html += detailsLeft;
             html += '</div>';
 
             html += '<div class="mapresultright">';
-			html += parish.distance +' miles <br/>';
-			//html +=	'<span class="hiddenText">Footnote</span>²</a>';
-			//html += '</div>';
-					
-			html += '<a href="javascript:void(0);" rel="nofollow" class="lnkblu" onclick="archden.showDirections('+ coords +')">Driving Directions</a>';
+			html += detailsRight;
 			html +=	'</div>';
+			html += '</div>';
 			html += '<div class="clearBoth"></div>';
 			html += '</div>';
+			
+		html = html.replace(/undefined/g, '');
 		
 		return html;
 	}
+	
+	this.findAndConverTime = function(string) {
+		if(!string){ return null; }
+		var newString = string;
+		var pattern = /\d{4}/g;
+		var matches = string.match(pattern);
+		if(!matches){ return null; }
+		$.each(matches, function(idx, time) {
+			var conv = archden.convertTime(time);
+			newString = newString.replace(time, conv);
+		});
+		return newString;
+	}
+	
+	this.convertTime = function(time) {
+		var sAve = 0
+		var ez1 = ""
+		var ml3 = "00"
+		var pw3 = parseFloat(archden.cleanBad(time));
+		var pm4 = archden.cleanBad(time);
+		var pm5 = archden.cleanBad(time);
+		var len = pm4.length
+		var ret;
+		if (len != 4) {
+			ret = "???"
+		}
+		else if (pw3>2401) {
+			ret = "???"
+		}
+		else if (pw3>1259) {
+			pw3 = pw3 - 1200
+
+		var pm4 = String(pw3)
+
+		var len = pm4.length
+		if (len < 4) {
+			pm4 = "0"+ pm4
+		}
+
+		if (pm4.substring(0, 1) == "0") {
+			var hours = pm4.substring(1, 2)
+		}
+		else {	
+			var hours = pm4.substring(0, 2)
+		}
+		var mins = pm4.substring(2, 4)
+		ez1 = " PM"
+		if (hours == "12") ez1 = " AM"
+		if (mins > "59") mins = "???"	
+			ret = hours + ":" + mins + ez1
+		}
+		else {
+			if (pm4.substring(0, 1) == "0") {
+				var hours = pm4.substring(1, 2)
+			}
+			else {	
+				var hours = pm4.substring(0, 2)
+			}
+			var mins = pm4.substring(2, 4)
+			ez1 = " AM"
+			if (hours == "12") ez1 = " PM"
+					if (pm5.substring(0, 2) == "00") hours = "12"
+						if (mins > "59") mins = "???"	
+							ret = hours + ":" + mins + ez1
+		}
+		
+		return ret;
+	}
+
+	this.cleanBad = function(string) {
+	    for (var i=0, output='', valid="eE-0123456789."; i<string.length; i++)
+	       if (valid.indexOf(string.charAt(i)) != -1)
+	          output += string.charAt(i)
+	    return output;
+	} 
+
 }
 
 var archden = new ArchDen();

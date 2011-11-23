@@ -105,7 +105,7 @@
 
 <script>
 	var hidden = true;
-
+	var details = [];
 	function searchByTime() {
 		archden.tod = $("#tod").val();
 		archden.dow = $("#dow").val();
@@ -114,6 +114,11 @@
 		archden.location = $('input#location').val();
 		archden.radius = $('input#radius').val();
 		archden.name = $('input#name').val();
+		
+		if(archden.name){
+			archden.radius = 300;
+		}
+		
 		if(archden.tos == 'Confession'){
 			archden.confession = true;
 		}else{
@@ -164,19 +169,18 @@
 			});
 		}
 	});
-
-	$(function() {
-		$("#selectable").selectable({
-			selected : function(event, ui) {
-				var id = ui.selected.id;
-				debug.log("ID: " + id);
-				$('#details-' + id).show('slow', function() {
-					
-				});
-			}
-		});
-	});
 	
+	function expandDetails(id){
+		if (!details[id]) {
+			$('#details-'+ id).show('slow', function() {
+				details[id] = true;
+			});
+		} else {
+			$('#details-'+ id).hide('fast', function() {
+				details[id] = false;
+			});
+		}
+	}
 	
 	var feedbackTab = {
 

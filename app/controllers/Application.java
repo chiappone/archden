@@ -123,9 +123,9 @@ public class Application extends Controller {
 			topic = topic.toLowerCase();
 			for (Map<String, String> result : results) {
 
-				Logger.info("Topic: " + topic);
+				//Logger.info("Topic: " + topic);
 				if (result.containsKey(topic)) {
-					Logger.info("Contains topic");
+					//Logger.info("Contains topic");
 					searchResults.put(result.get("KEY"), result);
 				}
 
