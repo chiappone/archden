@@ -7,6 +7,7 @@ var withinEl = document.getElementById('within');
 
 var parishMarkers = [];
 var infowindows = [];
+var youMarker;
 
 var image = 'public/images/church2.png';
 var you = 'public/images/you.gif';
@@ -182,8 +183,12 @@ function ArchDen() {
 					}
 
 					$('input#location').val(archden.here.address);
+					
+					if(youMarker){
+						youMarker.setMap(null);
+					}
 
-					var marker = new google.maps.Marker({
+					youMarker = new google.maps.Marker({
 						position : pos,
 						map : map,
 						icon: you
@@ -321,7 +326,7 @@ function ArchDen() {
 					map.setCenter(newBounds.getCenter());
 				}
 
-				$('ol#selectable').html('');
+				$('#mapresults').html('');
 
 				archden.buildResultList();
 
