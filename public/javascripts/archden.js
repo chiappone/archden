@@ -9,6 +9,7 @@ var parishMarkers = [];
 var infowindows = [];
 
 var image = 'public/images/church2.png';
+var you = 'public/images/you.gif';
 
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
@@ -184,7 +185,8 @@ function ArchDen() {
 
 					var marker = new google.maps.Marker({
 						position : pos,
-						map : map
+						map : map,
+						icon: you
 					});
 					// Default query
 					archden.queryCassandraHq();
@@ -368,7 +370,11 @@ function ArchDen() {
 					if (!school) {
 						school = "";
 					}
-
+					
+					var results = archden.resultListHTML(parish);
+					$('#mapresults').append(results);
+					
+					/*
 					var topic = '<li><b>Sunday Masstimes: </b> ';
 					topic += parish.sunday;
 					topic += '</li>';
@@ -495,6 +501,7 @@ function ArchDen() {
 							'</ul>' ].join('');
 
 					$('#selectable').append(html);
+					*/
 
 				});
 
@@ -506,6 +513,7 @@ function ArchDen() {
 				iwin.close();
 			});
 			
+			directionsDisplay.setMap(map);
 			calcRoute(start, end);
 			archden.slideOpen();
 			event.preventDefault();
@@ -518,6 +526,8 @@ function ArchDen() {
 		}
 
 		this.slideClose = function() {
+			directionsDisplay.setMap(null);
+			map.setZoom(13);
 			$('.feedback-panel').animate({
 				left : '-' + feedbackTab.containerWidth
 			}, feedbackTab.speed).removeClass('open');
@@ -531,6 +541,37 @@ function ArchDen() {
 		if (a.distance > b.distance)
 			return 1;
 		return 0;
+	}
+	
+	this.resultListHTML = function(parish){
+		var coords = parish.latlng.lat() + "," + parish.latlng.lng();
+		
+		var	html = '<div class="churchpopup churchaddressblock1" id="searchResult1">';
+			//html += '<a id="churchaddressblockpointer1" class="churchaddressblockpointer" href="javascript:void(0);" rel="nofollow">';
+			//html += '<img id="resultImage1" class="marker_result" alt="Result1" src="https://shared.via.infonow.net/images/mapicons/blue1.png">';
+			//html += '</a>';
+			html += '<div class="fr wdth135 padtp15">';
+	        html += '</div>';
+	        html += '<div class="mapresulttop">';
+			html += '<h2>';
+			html += '<span class="hiddenText">' + parish.nombre +'</span>';
+			html += '</h2>';
+	        html += '</div>';
+	        html += '<div class="mapresultleft">';
+	        html += parish.physicaladdress +' '+ parish.physicalzip +'<br/>'+  parish.phone1 +'<br/>'; 
+            html += '</div>';
+
+            html += '<div class="mapresultright">';
+			html += parish.distance +' miles <br/>';
+			//html +=	'<span class="hiddenText">Footnote</span>²</a>';
+			//html += '</div>';
+					
+			html += '<a href="javascript:void(0);" rel="nofollow" class="lnkblu" onclick="archden.showDirections('+ coords +')">Driving Directions</a>';
+			html +=	'</div>';
+			html += '<div class="clearBoth"></div>';
+			html += '</div>';
+		
+		return html;
 	}
 }
 
