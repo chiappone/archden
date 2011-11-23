@@ -81,7 +81,7 @@ public class Application extends Controller {
 				operator = "LT";
 			} else if (timeofday.equalsIgnoreCase("noon")) {
 				timeofday = "1200";
-			} else if (timeofday.equalsIgnoreCase("afternoon")) {
+			} else if (timeofday.equalsIgnoreCase("evening")) {
 				timeofday = "1200";
 				operator = "GT";
 			} else {

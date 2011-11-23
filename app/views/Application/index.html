@@ -10,22 +10,24 @@
 
 				<p class="location">
 					<label for="location">Enter an address, zip code, or city
-						to search</label>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<label for="radius">Radius</label><br /> <input type="text" name="location"
-						id="location" size="32" /> <input type="text" name="radius"
+						to search</label>&nbsp;&nbsp; &nbsp;&nbsp;
+						<label for="radius">Radius mi</label><br /> <input type="text" name="location"
+						id="location" size="30" /> <input type="text" name="radius"
 						id="radius" value="3" />
 				</p>
 				<p class="name">
 					<label for="name"> Or search by Parish name </label><br /> <input
-						id="name" size="32" />
+						id="name" size="30" />
 				</p>
 				<p class="refine">
-					<label for="refine" id="refine" style="cursor: pointer;">
+					<label for="refine" id="refine">
 						Refine your search </label>
 				<div id="more" style="display: none">
-					<label for="dow" class="select-label"> Day of Week </label> <select class="dow" id="dow">
+				<fieldset class="fields">
+					<label for="dow" class="select-label"> Day </label> <select class="dow" id="dow">
+						<option value="sunday">Any</option>
 						<option>Sunday</option>
-						<option value="saturdayanticipatory">Anticipitory</option>
+						<option value="saturdayanticipatory">Anticipatory</option>
 						<option>Saturday</option>
 						<option>Weekday</option>
 						<option value="holydays">Holy Day</option>
@@ -36,7 +38,7 @@
 						<option>Any</option>
 						<option>Morning</option>
 						<option>Noon</option>
-						<option>Afternoon</option>
+						<option>Evening</option>
 					</select> <br /> 
 					
 					<label for="tos" class="select-label"> Service Type </label> <select class="tos"
@@ -57,7 +59,7 @@
 						<option value = 'vietnamese'>Vietnamese</option>
 						<option value = 'asl'>ASL/Sign Language</option>
 					</select> <br /> 
-					
+				</fieldset>	
 				</div>
 
 				<div id="disp"></div>
@@ -67,7 +69,7 @@
 				</p>
 
 				<p class="submit">
-					<input type="button" value="Send" onClick="searchByTime();"
+					<input type="button" value="Search" onClick="searchByTime();"
 						style="cursor: pointer;" />
 				</p>
 
@@ -89,6 +91,13 @@
 		</div>
 
 	</div>
+</div>
+
+<div class="feedback-panel">
+	<a class="modalCloseImg" title="Close" onclick="closeDirections();"></a>
+ 	<h3>Directions</h3>
+ 	<div id="directions-panel"></div>
+      
 </div>
 
 <script>
@@ -130,9 +139,16 @@
 		}
 	}
 
+	$("select").css({"width": 150});
 	$("select").change(searchByTime);
 	$(":radio").click(searchByTime);
 	$(":checkbox").click(searchByTime);
+	
+	$('input').keypress(function(e){
+	      if(e.which == 13){
+	      	searchByTime();
+	      }
+	});
 
 	$('#refine').click(function() {
 		if (hidden) {
@@ -157,6 +173,26 @@
 			}
 		});
 	});
+	
+	
+	var feedbackTab = {
+
+			speed : 300,
+			containerWidth : $('.feedback-panel').outerWidth(),
+			containerHeight : $('.feedback-panel').outerHeight(),
+			tabWidth : $('.feedback-tab').outerWidth(),
+
+			init : function() {
+				$('.feedback-panel').css('height', feedbackTab.containerHeight + 'px');
+			}
+		};
+
+	feedbackTab.init();
+	
+	function closeDirections(){
+		archden.slideClose();
+	}
+
 </script>
 
 <!-- Include javscript last -->
