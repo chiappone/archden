@@ -194,6 +194,9 @@ function ArchDen() {
 						map : map,
 						icon: you
 					});
+					
+					bounds = new google.maps.LatLngBounds();
+					bounds.extend(pos);
 					// Default query
 					archden.queryCassandraHq();
 				}
@@ -243,7 +246,6 @@ function ArchDen() {
 					return;
 				}
 
-				bounds = new google.maps.LatLngBounds();
 				// debug.log(resp.members);
 				$.each(
 						resp.members,
