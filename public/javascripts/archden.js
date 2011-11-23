@@ -1,6 +1,7 @@
 var map;
 var here = {};
 var geocoder = new google.maps.Geocoder();
+var bounds = new google.maps.LatLngBounds();
 
 var inputFieldEl = document.getElementById('position');
 var withinEl = document.getElementById('within');
@@ -242,7 +243,7 @@ function ArchDen() {
 					return;
 				}
 
-				var newBounds = new google.maps.LatLngBounds();
+				bounds = new google.maps.LatLngBounds();
 				// debug.log(resp.members);
 				$.each(
 						resp.members,
@@ -284,7 +285,7 @@ function ArchDen() {
 									infowindows.push(infowindow);
 						
 									archden.listenMarker(marker, infowindow);
-									newBounds.extend(church.latlng);
+									bounds.extend(church.latlng);
 								}
 							}
 
@@ -322,9 +323,10 @@ function ArchDen() {
 				});
 
 				if (nameQuery) {
-					map.setCenter(newBounds.getCenter());
+					map.setCenter(bounds.getCenter());
 				}
-
+				
+				map.fitBounds(bounds);
 				$('#mapresults').html('');
 
 				archden.buildResultList();
@@ -396,7 +398,8 @@ function ArchDen() {
 
 		this.slideClose = function() {
 			directionsDisplay.setMap(null);
-			map.setZoom(13);
+			map.fitBounds(bounds);
+			//map.setZoom(13);
 			$('.feedback-panel').animate({
 				left : '-' + feedbackTab.containerWidth
 			}, feedbackTab.speed).removeClass('open');
