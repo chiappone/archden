@@ -38,7 +38,7 @@ public class QueryAppender {
     	StringBuilder select = new StringBuilder("select * WHERE 'dayofweek' = '"+ dayofweek 
     			+"' AND 'timeofday' "+ operator + " '"+ timeofday +"'");
     	if(name != null && !name.isEmpty()){
-    		select.append(" AND 'nombre' = '" + name +"'");
+    		select.append(" AND 'name' = '" + name +"'");
     	}
     	
     	String sel = URLEncoder.encode(select.toString(), "UTF-8");
@@ -58,6 +58,7 @@ public class QueryAppender {
 		Collection<Map<String, String>> vals = parMap.values();
 		for(Map<String,String> parishes : vals){
 			String pId = parishes.get("parishid");
+			Logger.info("Found parishid: "+ pId);
 			retMap.put(pId, parishes);
 		}
 		

@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +20,7 @@ public class DataLoad extends UnitTest {
     public void loadCsvFile() throws Exception {
         
     	InputStreamReader reader = new InputStreamReader(
-    			getClass().getResourceAsStream("parishes.csv"));
+    			getClass().getResourceAsStream("parishes-112811.csv"));
     	
     	BufferedReader rb = new BufferedReader(reader);
     	int linenum = 0;
@@ -38,11 +39,12 @@ public class DataLoad extends UnitTest {
     			for(int i=0; i<data.length; i++){
     				if(!data[i].isEmpty()){
     					String dString = data[i].replaceAll(";", ",");
+    					//dString = URLEncoder.encode(dString, "UTF-8");
     					params.put(header[i].toLowerCase().trim(), dString);
     				}
     			}
-    			analyzeData(params);
-    			//sendLocationRequest(params);
+    			//analyzeData(params);
+    			sendLocationRequest(params);
     		}
     	}
     	

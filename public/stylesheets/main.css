@@ -127,8 +127,8 @@ hgroup h1 {
 
 .select-label {
 	width: 4em;
-	float:left;
-	text-align:right;
+	float: left;
+	text-align: right;
 }
 
 .fields {
@@ -355,7 +355,7 @@ div.mapresulttop {
 	cursor: pointer;
 }
 
-div.mapresulttop:hover{
+div.mapresulttop:hover {
 	text-decoration: underline;
 	font-weight: bold;
 	color: #666666;
@@ -396,9 +396,21 @@ div.churchpopup {
 	color: black;
 }
 
-
 #map-canvas {
 	margin-right: 400px;
+}
+
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+}
+
+* html .ui-autocomplete {
+	height: 200px;
 }
 
 @media print {

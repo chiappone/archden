@@ -60,7 +60,7 @@ public class Application extends Controller {
 		name = name.trim();
 
 		String ws = Constants.WSURL
-				+ "/cql/archden/locations?select=select * WHERE 'nombre' = '"
+				+ "/cql/archden/locations?select=select * WHERE 'name' = '"
 				+ name + "'";
 		Logger.info("Request: " + ws);
 		HttpResponse res = WS.url(ws)

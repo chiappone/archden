@@ -68,9 +68,17 @@ public class SetupAppTest extends FunctionalTest {
 				.post();
 
 		System.out.println(res.getJson());
+		
+		ws = Constants.WSURL
+				+ "/column/archden/masstimes/name/UTF8TYPE?isIndex=true";
+
+		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
+				.post();
+
+		System.out.println(res.getJson());
 
 		ws = Constants.WSURL
-				+ "/column/archden/locations/nombre/UTF8TYPE?isIndex=true";
+				+ "/column/archden/locations/name/UTF8TYPE?isIndex=true";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
