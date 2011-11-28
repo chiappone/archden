@@ -58,7 +58,6 @@ public class QueryAppender {
 		Collection<Map<String, String>> vals = parMap.values();
 		for(Map<String,String> parishes : vals){
 			String pId = parishes.get("parishid");
-			Logger.info("Found parishid: "+ pId);
 			retMap.put(pId, parishes);
 		}
 		
