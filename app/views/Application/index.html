@@ -122,6 +122,9 @@
 		
 		if(archden.tos == 'Confession'){
 			archden.confession = true;
+			if(archden.dow == 'sunday'){
+				archden.dow = 'saturday';
+			}
 		}else{
 			archden.confession = false;
 		}
