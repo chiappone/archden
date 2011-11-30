@@ -644,7 +644,7 @@ function ArchDen() {
 		var newString = string;
 		var pattern = /\d{4}/g;
 		var matches = string.match(pattern);
-		if(!matches){ return null; }
+		if(!matches){ return string; }
 		$.each(matches, function(idx, time) {
 			var conv = archden.convertTime(time);
 			newString = newString.replace(time, conv);
