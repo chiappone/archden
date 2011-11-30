@@ -111,7 +111,7 @@ function generateInfoWindowHTML(parish) {
 	var coords = parish.latlng.lat() + "," + parish.latlng.lng();
 	return [ '<h4>', parish.name, '</h4>', '<label>', parish.physicaladdress,
 			', ', parish.physicalzip, '</label><ul><li>Pastor: ',
-			parish.pastor, '</li>', '<li>Sunday Masstimes: ', parish.sunday,
+			parish.pastor, '</li>', '<li>Sunday Masstimes: ', archden.findAndConvertTime(parish.sunday),
 			'</li>', '<li>Website: ', link.link(parish.website), '</li></ul>',
 			'<a onclick="archden.showDirections(', coords, ')">',
 			'Show Directions </a>' ].join('');
@@ -553,7 +553,7 @@ function ArchDen() {
 		}
 		
 		if(topic)
-			topic = archden.findAndConverTime(topic);
+			topic = archden.findAndConvertTime(topic);
 		
 		var	detailsLeft = '<b>Pastor:</b> '+ parish.pastor+ '<br/>';
 			detailsLeft += '<b>Sunday Masstimes:</b> '+parish.sunday;
@@ -576,7 +576,7 @@ function ArchDen() {
 			detailsLeft += '<b>Saturday Masses:</b> '+ parish.saturday;
 			detailsLeft += '<br/>';
 			
-		detailsLeft =  archden.findAndConverTime(detailsLeft);
+		detailsLeft =  archden.findAndConvertTime(detailsLeft);
 				
 		var detailsRight = '<b>Saturday Confession:</b> ';
 			detailsRight += parish.saturday_confessions+ ' <br/>';
@@ -594,7 +594,7 @@ function ArchDen() {
 			detailsRight += parish.friday_confessions + ' <br/><br/>';
 			
 			
-		detailsRight = archden.findAndConverTime(detailsRight);
+		detailsRight = archden.findAndConvertTime(detailsRight);
 		
 		detailsRight += '<b>Phone:</b> '+ parish.phone1+ '<br/>';
 		detailsRight += '<b>Fax:</b> '+ parish.fax+ '<br/>'+ '</div>';
@@ -639,7 +639,7 @@ function ArchDen() {
 		return html;
 	}
 	
-	this.findAndConverTime = function(string) {
+	this.findAndConvertTime = function(string) {
 		if(!string){ return null; }
 		var newString = string;
 		var pattern = /\d{4}/g;
