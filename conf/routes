@@ -16,5 +16,7 @@ GET		/plotname						Application.plotNamedLocation(format:'json')
 GET		/plotbytime						Application.plotByMassTimes(format:'json')
 GET		/search							Application.searchData(format:'json')
 
+GET	/test		Application.test(format:'json')
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
