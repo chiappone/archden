@@ -38,7 +38,7 @@
 						id="tod">
 						<option>Any</option>
 						<option>Morning</option>
-						<option>Noon</option>
+						<option value="Noon">Afternoon</option>
 						<option>Evening</option>
 					</select> <br /> 
 					
@@ -72,6 +72,8 @@
 				<p class="submit">
 					<input type="button" value="Search" onClick="searchByTime();"
 						style="cursor: pointer;" />
+					<input type="button" value="Reset" onClick="resetForm();"
+						style="cursor: pointer;" />
 				</p>
 
 			</form>
@@ -100,6 +102,10 @@
 <div class="feedback-panel">
 	<a class="modalCloseImg" title="Close" onclick="closeDirections();"></a>
  	<h3>Directions</h3>
+ 	<!-- 
+ 	<label for="changeStart"> Change Start Address </label> 
+ 		<input id="changeStart" size="30" />
+ 	 -->
  	<div id="directions-panel"></div>
       
 </div>
@@ -202,6 +208,10 @@
 	
 	function closeDirections(){
 		archden.slideClose();
+	}
+	
+	function resetForm(){
+		$( "form" )[ 0 ].reset();
 	}
 
 </script>

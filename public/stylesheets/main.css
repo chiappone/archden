@@ -207,12 +207,12 @@ hgroup h1 {
 }
 
 #refine:hover {
-	color: #666666;
+	color: #008DD3;
 	text-decoration: underline;
 }
 
 .header:hover {
-	color: #666666;
+	color: #008DD3;
 	text-decoration: underline;
 }
 
@@ -358,7 +358,7 @@ div.mapresulttop {
 div.mapresulttop:hover {
 	text-decoration: underline;
 	font-weight: bold;
-	color: #666666;
+	color: #008DD3;
 }
 
 div.mapresultleft {

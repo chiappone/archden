@@ -8,6 +8,7 @@ var withinEl = document.getElementById('within');
 
 var parishMarkers = [];
 var infowindows = [];
+var openInfoWindow;
 var youMarker;
 
 var image = 'public/images/church2.png';
@@ -61,7 +62,7 @@ function initialize() {
 	var myOptions = {
 		zoom : 6,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-		scrollwheel : false
+		scrollwheel : true
 	};
 	map = new google.maps.Map(document.getElementById('mapContainer'),
 			myOptions);
@@ -86,7 +87,7 @@ function initialize() {
 }
 
 function handleNoGeolocation(errorFlag) {
-	archden.getGeo("Denver, CO", 500);
+	archden.getGeo("1530 Logan Street  Denver, 80203", 500);
 }
 
 function doQuery(el, inputFieldEl, withinEl) {
@@ -115,6 +116,12 @@ function generateInfoWindowHTML(parish) {
 			'</li>', '<li>Website: ', link.link(parish.website), '</li></ul>',
 			'<a onclick="archden.showDirections(', coords, ')">',
 			'Show Directions </a>' ].join('');
+}
+
+function generateYouWindowHTML() {
+	var html = '<h4> Your Location </h4>'; 
+		html += '<label>'+ archden.here.address +'</label>';
+	return html;
 }
 
 function search() {
@@ -151,6 +158,16 @@ function ArchDen() {
 	this.parishData = [];
 	this.names = {};
 
+	$('#location').click(function(){
+		$(this).focus();
+		$(this).select();
+	});
+	
+	$('#name').click(function(){
+		$(this).focus();
+		$(this).select();
+	});
+	
 	this.getGeo = function() {
 		debug.log("Geocoding: " + archden.location + " radius: "
 				+ archden.radius);
@@ -184,7 +201,7 @@ function ArchDen() {
 						archden.radius = 3;
 					}
 
-					$('input#location').val(archden.here.address);
+					//$('input#location').val(archden.here.address);
 					
 					if(youMarker){
 						youMarker.setMap(null);
@@ -196,8 +213,17 @@ function ArchDen() {
 						icon: you
 					});
 					
+					var infowindow = new google.maps.InfoWindow(
+							{
+								content : generateYouWindowHTML()
+							});
+					
+					infowindows.push(infowindow);
+					archden.listenMarker(youMarker, infowindow);
+					
 					bounds = new google.maps.LatLngBounds();
-					bounds.extend(pos);
+					bounds.extend(pos);	
+					map.setCenter(pos);
 					// Default query
 					archden.queryCassandraHq();
 				}
@@ -320,16 +346,26 @@ function ArchDen() {
 				//archden.parishNames = uniqueArr(archden.parishNames).sort();
 				//archden.parishNames = archden.parishNames.sort(archden.compareName);
 				archden.convertObjectToArray(archden.names);
+				archden.parishNames = archden.parishNames.sort();
+				
+				$("#name").keyup(function() {
+					if($('#name').val().toUpperCase() == 'ST' ||
+							$('#name').val().toUpperCase() == 'ST.'){
+						$('#name').val('Saint');
+					}
+				});
 				
 				$('#name').autocomplete({
 					minLength: 1,
 					source : archden.parishNames,
 					focus: function( event, ui ) {
 						$( "#name" ).val( ui.item.label );
-						return false;					},
+						return false;					
+					},
 					select: function( event, ui ) {
 						$( "#name" ).val( ui.item.value);
 						$( "#searchname" ).val( ui.item.value );
+						searchByTime();
 						return false;
 					}
 				});
@@ -340,6 +376,8 @@ function ArchDen() {
 				
 				map.fitBounds(bounds);
 				$('#mapresults').html('');
+				map.setCenter(here.pos);
+				map.setZoom(map.getZoom() - 1);
 
 				archden.buildResultList();
 
@@ -359,8 +397,12 @@ function ArchDen() {
 	}
 	
 	this.listenMarker = function(marker, infowindow){
-		google.maps.event.addListener(marker, 'click', function() {
+		google.maps.event.addListener(marker, 'mouseover', function() {
+			if(openInfoWindow){
+				openInfoWindow.close();
+			}
             infowindow.open(map, marker);
+            openInfoWindow = infowindow;
         });
 	}
 	
@@ -407,7 +449,7 @@ function ArchDen() {
 		$.each(archden.parishData,
 				function(index, parish) {
 					if (index == 0) {
-						map.setCenter(parish.latlng);
+						//map.setCenter(parish.latlng);
 					}
 					
 					var results = archden.resultListHTML(parish, index);
