@@ -108,12 +108,14 @@ function generateInfoWindowHTML(parish) {
 	var link = parish.website;
 	if (!link) {
 		link = "";
+	}else {
+		link = '<a href='+ link +' target="_blank">' + link + '</a>';
 	}
 	var coords = parish.latlng.lat() + "," + parish.latlng.lng();
 	return [ '<h4>', parish.name, '</h4>', '<label>', parish.physicaladdress,
 			', ', parish.physicalzip, '</label><ul><li>Pastor: ',
 			parish.pastor, '</li>', '<li>Sunday Masstimes: ', archden.findAndConvertTime(parish.sunday),
-			'</li>', '<li>Website: ', link.link(parish.website), '</li></ul>',
+			'</li>', '<li>Website: ', link, '</li></ul>',
 			'<a onclick="archden.showDirections(', coords, ')">',
 			'Show Directions </a>' ].join('');
 }
@@ -510,9 +512,13 @@ function ArchDen() {
 		var school = parish.school_website;
 		if (!link) {
 			link = "";
+		}else{
+			link = '<a href='+ link +' target="_blank">' + link + '</a>';
 		}
 		if (!school) {
 			school = "";
+		}else {
+			school = '<a href='+ school +' target="_blank">' + school + '</a>';
 		}
 		
 		if (archden.dow) {
@@ -604,7 +610,7 @@ function ArchDen() {
 			detailsLeft += parish.saturday_anticipatory+ '<br/>';
 			detailsLeft += '<b>Adoration:</b> '+ parish.adoration;
 			detailsLeft += '<br/>'+ '<b>Website:</b> ';
-			detailsLeft += link.link(parish.website)+ '<br/>';
+			detailsLeft += link + '<br/>';
 			detailsLeft += '<b>School:</b> '+ parish.grades+ '<br/>';
 			detailsLeft += '<b>School Website:</b> ';
 			detailsLeft += school.link(parish.school_website)+ '<br/>';
