@@ -196,11 +196,11 @@ function ArchDen() {
 					map.setZoom(13);
 
 					archden.here.address = results[1].formatted_address;
-					archden.address = here.address;
 					if (!archden.radius) {
 						archden.radius = 3;
 					}
 
+					debug.log("I am here: "+ archden.here.address);
 					//$('input#location').val(archden.here.address);
 					
 					if(youMarker){
@@ -233,7 +233,7 @@ function ArchDen() {
 
 	this.queryCassandraHq = function() {
 		$('#closest-church').text('Searching...');
-		debug.log("Address: " + archden.address);
+		debug.log("Address: " + archden.here.address);
 		debug.log("Radius: " + archden.radius);
 		if (archden.parishData) {
 			debug.log("emptying array");
@@ -304,6 +304,7 @@ function ArchDen() {
 									parishMarkers.push(marker);
 									archden.parishData.push(church);
 								
+									debug.log("Found church: "+ church.name);
 									
 									var infowindow = new google.maps.InfoWindow(
 											{

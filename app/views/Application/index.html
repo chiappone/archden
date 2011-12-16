@@ -70,9 +70,9 @@
 				</p>
 
 				<p class="submit">
-					<input type="button" value="Search" onClick="searchByTime();"
-						style="cursor: pointer;" />
 					<input type="button" value="Reset" onClick="resetForm();"
+						style="cursor: pointer;" />
+					<input type="button" value="Search" onClick="searchByTime();"
 						style="cursor: pointer;" />
 				</p>
 
@@ -149,6 +149,9 @@
 
 		debug.log("Service Type: " + archden.tos);
 		if (archden.location) {
+			if(archden.location.toUpperCase() == 'HIGHLANDS RANCH' ){
+				archden.location = '80126'
+			}
 			archden.location = archden.location + ', CO';
 			debug.log("using location:" + archden.location);
 			archden.getGeo();
@@ -211,7 +214,8 @@
 	}
 	
 	function resetForm(){
-		$( "form" )[ 0 ].reset();
+		//$( "form" )[ 0 ].reset();
+		location.reload();
 	}
 
 </script>
