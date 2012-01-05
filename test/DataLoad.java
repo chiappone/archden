@@ -20,7 +20,7 @@ public class DataLoad extends UnitTest {
     public void loadCsvFile() throws Exception {
         
     	InputStreamReader reader = new InputStreamReader(
-    			getClass().getResourceAsStream("parishes-112811.csv"));
+    			getClass().getResourceAsStream("parishes-010512.csv"));
     	
     	BufferedReader rb = new BufferedReader(reader);
     	int linenum = 0;
@@ -43,7 +43,7 @@ public class DataLoad extends UnitTest {
     					params.put(header[i].toLowerCase().trim(), dString);
     				}
     			}
-    			//analyzeData(params);
+    			analyzeData(params);
     			sendLocationRequest(params);
     		}
     	}

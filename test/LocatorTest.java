@@ -1,16 +1,13 @@
-import static org.junit.Assert.*;
-
-import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
-
-import constants.Constants;
-import data.QueryAppender;
 
 import play.Logger;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.test.FunctionalTest;
+import constants.Constants;
 
 public class LocatorTest extends FunctionalTest {
 
@@ -49,7 +46,7 @@ public class LocatorTest extends FunctionalTest {
 
 	}
 
-	@Test
+	
 	public void plotByMassTimesTest() throws Exception {
 
 		String ws = URL +"plotbytime?dayofweek=monday&timeofday=1000&operator=GT";
@@ -61,5 +58,7 @@ public class LocatorTest extends FunctionalTest {
 		System.out.println(res.getString("UTF-8"));
 		
 	}
+	
+
 
 }

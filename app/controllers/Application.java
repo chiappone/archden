@@ -96,8 +96,28 @@ public class Application extends Controller {
 			}
 
 			Map<String, Map<String, String>> retMap = qa.queryByTime(dayofweek,
-					timeofday, operator, name);
-			JsonElement json = gson.toJsonTree(retMap);
+					timeofday, operator, null);
+			
+			JsonElement json = null;
+			
+			if(name != null  && !name.isEmpty()){
+				Map<String, Map<String, String>> searchResults = new HashMap<String, Map<String, String>>();
+				Collection<Map<String, String>> results = retMap.values();
+				name = name.toLowerCase();
+				for (Map<String, String> result : results) {
+					
+					if (result.get("name").equalsIgnoreCase(name) || 
+							result.get("full name").equalsIgnoreCase(name)) {
+						//Logger.info("Contains name");
+						searchResults.put(result.get("KEY"), result);
+					}
+
+				}
+				json = gson.toJsonTree(searchResults);
+			}else{
+				json = gson.toJsonTree(retMap);
+			}
+			
 
 			renderJSON(json);
 		} catch (Exception e) {

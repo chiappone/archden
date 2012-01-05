@@ -11,6 +11,7 @@ import data.QueryAppender;
 
 public class SetupAppTest extends FunctionalTest {
 
+	@Test
 	public void createKeyspace() {
 
 		String ws = Constants.WSURL + "/keyspace/archden";
@@ -21,7 +22,8 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 
 	}
-
+	
+	@Test
 	public void dropCf() {
 		String ws = Constants.WSURL + "/columnfamily/archden/locations";
 
@@ -31,6 +33,7 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 	}
 
+	@Test
 	public void createColumnFam() {
 
 		String ws = Constants.WSURL

@@ -56,7 +56,7 @@ function clearOverlays() {
 }
 
 function initialize() {
-	debug.log("init search");
+	//debug.log("init search");
 	directionsDisplay = new google.maps.DirectionsRenderer();
 
 	var myOptions = {
@@ -116,13 +116,17 @@ function generateInfoWindowHTML(parish) {
 			', ', parish.physicalzip, '</label><ul><li>Pastor: ',
 			parish.pastor, '</li>', '<li>Sunday Masstimes: ', archden.findAndConvertTime(parish.sunday),
 			'</li>', '<li>Website: ', link, '</li></ul>',
-			'<a onclick="archden.showDirections(', coords, ')">',
+			'<a onclick="archden.directions(\'', parish.physicaladdress, '\')">',
 			'Show Directions </a>' ].join('');
 }
 
 function generateYouWindowHTML() {
+	var location = archden.location;
+	if(!location){
+		location = archden.here.address;
+	}
 	var html = '<h4> Your Location </h4>'; 
-		html += '<label>'+ archden.here.address +'</label>';
+		html += '<label>'+ location +'</label>';
 	return html;
 }
 
@@ -171,8 +175,7 @@ function ArchDen() {
 	});
 	
 	this.getGeo = function() {
-		debug.log("Geocoding: " + archden.location + " radius: "
-				+ archden.radius);
+		//debug.log("Geocoding: " + archden.location + " radius: "+ archden.radius);
 		geocoder.geocode({
 			'address' : archden.location
 		}, function(results, status) {
@@ -182,7 +185,7 @@ function ArchDen() {
 				here.pos = results[0].geometry.location;
 				archden.findNearbyParishes(here.pos);
 			} else {
-				debug.log("Unable to geocode.")
+				//debug.log("Unable to geocode.")
 				// alert("Geocode was not successful for the following reason: "
 				// + status);
 			}
@@ -202,7 +205,7 @@ function ArchDen() {
 						archden.radius = 3;
 					}
 
-					debug.log("I am here: "+ archden.here.address);
+					//debug.log("I am here: "+ archden.here.address);
 					//$('input#location').val(archden.here.address);
 					
 					if(youMarker){
@@ -235,11 +238,12 @@ function ArchDen() {
 
 	this.queryCassandraHq = function() {
 		$('#closest-church').text('Searching...');
-		debug.log("Address: " + archden.here.address);
-		debug.log("Radius: " + archden.radius);
+		//debug.log("Address: " + archden.here.address);
+		//debug.log("Radius: " + archden.radius);
 		if (archden.parishData) {
-			debug.log("emptying array");
+			//debug.log("emptying array");
 			archden.parishData = [];
+			archden.parishNames = [];
 		}
 		var churches = 0;
 		var q;
@@ -247,7 +251,8 @@ function ArchDen() {
 		if (!archden.name) {
 			q = [ '/plotall' ];
 		} else {
-			q = [ '/plotname?name=' + archden.name ];
+			//q = [ '/plotname?name=' + archden.name ];
+			q = [ '/search?topic=' + archden.name ];
 			nameQuery = true;
 		}
 		if (archden.tod) {
@@ -263,7 +268,7 @@ function ArchDen() {
 			q = [ '/search?topic=' + archden.topic ];
 		}
 
-		debug.log("Query: " + q);
+		//debug.log("Query: " + q);
 
 		clearOverlays();
 		var xhr = new XMLHttpRequest();
@@ -275,7 +280,7 @@ function ArchDen() {
 					return;
 				}
 
-				//debug.log(resp.members);
+				////debug.log(resp.members);
 				$.each(
 						resp.members,
 						function(key, value) {
@@ -306,7 +311,7 @@ function ArchDen() {
 									parishMarkers.push(marker);
 									archden.parishData.push(church);
 								
-									debug.log("Found church: "+ church.name);
+									////debug.log("Found church: "+ church.name);
 									
 									var infowindow = new google.maps.InfoWindow(
 											{
@@ -346,14 +351,15 @@ function ArchDen() {
 					$('#closest-church').text('No results found.');
 				}
 
-				//archden.parishNames = uniqueArr(archden.parishNames).sort();
-				//archden.parishNames = archden.parishNames.sort(archden.compareName);
+				
 				archden.convertObjectToArray(archden.names);
 				archden.parishNames = archden.parishNames.sort();
 				
+				
+				
 				$("#name").keyup(function() {
 					if($('#name').val().toUpperCase() == 'ST' ||
-							$('#name').val().toUpperCase() == 'ST.'){
+							$('#name').val().toUpperCase() == 'SAINT.'){
 						$('#name').val('Saint');
 					}
 				});
@@ -366,8 +372,8 @@ function ArchDen() {
 						return false;					
 					},
 					select: function( event, ui ) {
-						$( "#name" ).val( ui.item.value);
-						$( "#searchname" ).val( ui.item.value );
+						$( "#name" ).val( ui.item.label);
+						$( "#searchname" ).val( ui.item.label );
 						searchByTime();
 						return false;
 					}
@@ -422,20 +428,8 @@ function ArchDen() {
 		case 'name':
 			var n = jQuery.trim(value);
 			archden.names[n] = n;
-			if(church.alternatename1){
-				var alt = jQuery.trim(church.alternatename1);
-				archden.names[alt] = n;
-			}
-			if(church.alternatename2){
-				var alt = jQuery.trim(church.alternatename2);
-				archden.names[alt] = n;
-			}
-			if(church.alternatename3){
-				var alt = jQuery.trim(church.alternatename3);
-				archden.names[alt] = n;
-			}
-			if(church.alternatename4){
-				var alt = jQuery.trim(church.alternatename4);
+			if(church.full_name){
+				var alt = jQuery.trim(church.full_name);
 				archden.names[alt] = n;
 			}
 			break;
@@ -446,7 +440,7 @@ function ArchDen() {
 	}
 
 	this.buildResultList = function() {
-		debug.log("building result list");
+		//debug.log("building result list");
 		archden.parishData = archden.parishData.sort(archden.compare);
 		
 		$.each(archden.parishData,
@@ -463,6 +457,25 @@ function ArchDen() {
 		this.showDirections = function(lat, lng) {
 			var start = here.pos;
 			var end = new google.maps.LatLng(lat, lng);
+
+			$.each(infowindows, function(idx, iwin){
+				iwin.close();
+			});
+			
+			directionsDisplay.setMap(map);
+			calcRoute(start, end);
+			archden.slideOpen();
+			event.preventDefault();
+		}
+		
+		this.directions = function(address) {
+			var start = archden.location;
+			var end = address;
+			if(!start){
+				start = here.pos;
+			}
+			//debug.log("start: "+ start)
+			//debug.log("end: "+ end)
 
 			$.each(infowindows, function(idx, iwin){
 				iwin.close();
@@ -507,6 +520,7 @@ function ArchDen() {
 	
 	this.resultListHTML = function(parish, index){
 		var coords = parish.latlng.lat() + "," + parish.latlng.lng();
+		var pAddress = parish.address;
 		var topic = "";
 		var link = parish.website;
 		var school = parish.school_website;
@@ -666,7 +680,7 @@ function ArchDen() {
 	        html += '<div class="parishinfo">';
 	        html += parish.physicaladdress +' '+ parish.physicalzip +'<br/>'+  parish.phone1 +'<br/>'; 
 			html += parish.distance +' miles | ';
-			html += '<a href="javascript:void(0);" rel="nofollow" class="lnkblu" onclick="archden.showDirections('+ coords +')">Driving Directions</a>';
+			html += '<a href="javascript:void(0);" rel="nofollow" class="lnkblu" onclick="archden.directions(\''+ parish.physicaladdress +'\')">Driving Directions</a>';
 			html += '<br/><span class="topic">'+ topic + '</span>';
 			html += '<br/>';
 			html += '</div>';

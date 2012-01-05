@@ -122,7 +122,7 @@
 		archden.radius = $('input#radius').val();
 		archden.name = $('input#name').val();
 		
-		debug.log("Name: "+ archden.name);
+		//debug.log("Name: "+ archden.name);
 		
 		if(archden.name){
 			archden.radius = 300;
@@ -149,13 +149,13 @@
 			archden.topic = 'life teen/youth mass';
 		}
 
-		debug.log("Service Type: " + archden.tos);
+		//debug.log("Service Type: " + archden.tos);
 		if (archden.location) {
 			if(archden.location.toUpperCase() == 'HIGHLANDS RANCH' ){
 				archden.location = '80126'
 			}
 			archden.location = archden.location + ', CO';
-			debug.log("using location:" + archden.location);
+			//debug.log("using location:" + archden.location);
 			archden.getGeo();
 		} else {
 			archden.queryCassandraHq();
