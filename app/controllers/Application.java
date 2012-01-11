@@ -34,8 +34,9 @@ public class Application extends Controller {
 		Type mapType = new TypeToken<Map<String, Map<String, String>>>() {
 		}.getType();
 		String json = (String) Cache.get("alllocations");
-
+		
 		if (json != null) {
+			Logger.info("RESP: "+ json);
 			Map<String, Map<String, String>> retMap = gson.fromJson(json,
 					mapType);
 			JsonElement je = gson.toJsonTree(retMap);
@@ -48,6 +49,7 @@ public class Application extends Controller {
 				.authenticate(Constants.TOKEN, Constants.ACCOUNTID).get();
 
 		json = res.getString("UTF-8");
+		Logger.info("RESP: "+ json);
 		Cache.add("alllocations", json);
 		Map<String, Map<String, String>> retMap = gson.fromJson(json, mapType);
 		JsonElement je = gson.toJsonTree(retMap);
