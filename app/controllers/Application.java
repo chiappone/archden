@@ -90,10 +90,11 @@ public class Application extends Controller {
 				timeofday = "0100";
 				operator = "GT";
 			}
-
-			dayofweek = dayofweek.toLowerCase();
-
+			
 			if (confession) {
+				if(dayofweek.equalsIgnoreCase("any")){
+					dayofweek = "saturday";
+				}
 				dayofweek = dayofweek + "confessions";
 			}
 
@@ -155,6 +156,7 @@ public class Application extends Controller {
 
 			JsonElement je = gson.toJsonTree(searchResults);
 			renderJSON(je);
+
 
 		}
 

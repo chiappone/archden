@@ -23,7 +23,7 @@ public class QueryAppender {
 	public Map<String,Map<String,String>> queryByTime(String dayofweek, String timeofday,
 			String operator, String name) 
 			throws Exception{
-		dayofweek = dayofweek.toLowerCase();
+		
 		if(operator == null){
 			operator = "=";
 		}else if(operator.equalsIgnoreCase("GT")){
@@ -35,11 +35,18 @@ public class QueryAppender {
 		}
 		
 		String ws = Constants.WSURL + "/cql/archden/masstimes?select=";
-    	StringBuilder select = new StringBuilder("select * WHERE 'dayofweek' = '"+ dayofweek 
-    			+"' AND 'timeofday' "+ operator + " '"+ timeofday +"'");
+    	StringBuilder select = new StringBuilder("select * WHERE "+
+    			"'timeofday' "+ operator + " '"+ timeofday +"'");
+    	if(!dayofweek.equalsIgnoreCase("any")){
+    		select.append(" AND 'dayofweek' = '"+ dayofweek.toLowerCase() +"'"); 
+    	}else{
+    		select.append(" AND 'index' = 'yes'");
+    	}
     	if(name != null && !name.isEmpty()){
     		select.append(" AND 'name' = '" + name +"'");
     	}
+    	
+    	Logger.info("select: "+ select.toString());
     	
     	String sel = URLEncoder.encode(select.toString(), "UTF-8");
     	

@@ -125,6 +125,7 @@ function generateYouWindowHTML() {
 	if(!location){
 		location = archden.here.address;
 	}
+	$('input#location').val(location);
 	var html = '<h4> Your Location </h4>'; 
 		html += '<label>'+ location +'</label>';
 	return html;
@@ -188,6 +189,7 @@ function ArchDen() {
 				//debug.log("Unable to geocode.")
 				// alert("Geocode was not successful for the following reason: "
 				// + status);
+
 			}
 		});
 	};
@@ -268,7 +270,7 @@ function ArchDen() {
 			q = [ '/search?topic=' + archden.topic ];
 		}
 
-		//debug.log("Query: " + q);
+		debug.log("Query: " + q);
 
 		clearOverlays();
 		var xhr = new XMLHttpRequest();
@@ -353,9 +355,9 @@ function ArchDen() {
 
 				
 				archden.convertObjectToArray(archden.names);
-				archden.parishNames = archden.parishNames.sort();
+				archden.parishNames = archden.parishNames.sort(archden.compareParish);
 				
-				
+				debug.log(archden.parishNames)
 				
 				$("#name").keyup(function() {
 					if($('#name').val().toUpperCase() == 'ST' ||
@@ -516,6 +518,15 @@ function ArchDen() {
 		if(a.value == b.value){
 			return 0;
 		}
+	}
+	
+	this.compareParish = function(a, b) {
+		if (a.name < b.name) //sort string ascending
+			  debug.log
+			  return -1 
+		if (a.name > b.name)
+			  return 1
+	    return 0 //default return value (no sorting)
 	}
 	
 	this.resultListHTML = function(parish, index){

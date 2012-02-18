@@ -103,6 +103,7 @@ public class DataLoad extends UnitTest {
     		params.put("parishid", parishid);
     		params.put("dayofweek", header);
     		params.put("timeofday", tod);
+    		params.put("index", "yes");
     		params.putAll(allParams);
     		HttpResponse res = WS.url(ws)
         			.authenticate(Constants.TOKEN, Constants.ACCOUNTID).params(params).post();
