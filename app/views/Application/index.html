@@ -10,10 +10,10 @@
 
 				<p class="location">
 					<label for="location">Enter an address, zip code, or city
-						to search</label>&nbsp;&nbsp; &nbsp;&nbsp;
-						<label for="radius">Radius mi</label><br /> <input type="text" name="location"
+						to search</label>
+						<label for="radius" style="float:right">Radius mi</label><br /> <input type="text" name="location"
 						id="location" size="30" /> <input type="text" name="radius"
-						id="radius" value="3" />
+						id="radius" value="3" style="float:right"/>
 				</p>
 				<p class="name">
 					<label for="name"> Or search by Parish name </label><br /> <input
@@ -32,16 +32,16 @@
 						<option>Saturday</option>
 						<option>Weekday</option>
 						<option value="holydays">Holy Day</option>
-					</select> 
-					<br/>
+					</select>
+                    <div class="clear"></div>
 					<label for="tod" class="select-label"> Time of Day </label> <select class="tod"
 						id="tod">
 						<option>Any</option>
 						<option>Morning</option>
 						<option value="Noon">Afternoon</option>
 						<option>Evening</option>
-					</select> <br /> 
-					
+					</select>
+                    <div class="clear"></div>
 					<label for="tos" class="select-label"> Service Type </label> <select class="tos"
 						id="tos">
 						<option>Mass</option>
@@ -49,8 +49,8 @@
 						<option>Confession</option>
 						<option>Adoration</option>
 						<option>Seasonal</option>
-					</select> <br /> 
-					
+					</select>
+                    <div class="clear"></div>
 					<label for="lang" class="select-label"> Language </label> <select class="lang"
 						id="lang">
 						<option value = 'english'>English</option>
@@ -59,7 +59,8 @@
 						<option value = 'korean'>Korean</option>
 						<option value = 'vietnamese'>Vietnamese</option>
 						<option value = 'asl'>ASL/Sign Language</option>
-					</select> <br /> 
+					</select>
+                    <div class="clear"></div>
 				</fieldset>	
 				</div>
 
@@ -84,18 +85,19 @@
 	</div>
 	
 	<div id="mapresults" class="mapresults"></div>
-<!-- 
-	<div id=result-list>
 
-		<div class="selectlist">
+<!--
+    <div id=result-list>
 
-			<ol id="selectable">
+        <div class="selectlist">
 
-			</ol>
+            <ol id="selectable">
 
-		</div>
+            </ol>
 
-	</div>
+        </div>
+
+    </div>
 -->
 </div>
 

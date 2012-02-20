@@ -49,9 +49,12 @@ function resetMap() {
 
 function clearOverlays() {
 	if (parishMarkers) {
-		for (i in parishMarkers) {
-			parishMarkers[i].setMap(null);
-		}
+//		for (i in parishMarkers) {
+//			parishMarkers[i].setMap(null);
+//		}
+        for (i = 0; i < parishMarkers.length; i++) {
+            parishMarkers[i].setMap(null);
+        }
 	}
 }
 
@@ -68,18 +71,23 @@ function initialize() {
 			myOptions);
 	directionsDisplay.setMap(map);
 	directionsDisplay.setPanel(document.getElementById('directions-panel'));
-	
+
+    var locationTried = false;
+
 	// Try HTML5 geolocation
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
+            locationTried = true;
 			var pos = new google.maps.LatLng(position.coords.latitude,
 					position.coords.longitude);
 			here.pos = pos;
 			map.setCenter(pos);
 			archden.findNearbyParishes(pos);
 		}, function() {
+            locationTried = true;
 			handleNoGeolocation(true);
 		});
+//        if (!locationTried) handleNoGeolocation(false);
 	} else {
 		// Browser doesn't support Geolocation
 		handleNoGeolocation(false);
@@ -87,7 +95,8 @@ function initialize() {
 }
 
 function handleNoGeolocation(errorFlag) {
-	archden.getGeo("1530 Logan Street  Denver, 80203", 500);
+    archden.location = "1530 Logan Street, Denver, 80203";
+	archden.getGeo();
 }
 
 function doQuery(el, inputFieldEl, withinEl) {
@@ -452,7 +461,7 @@ function ArchDen() {
 					}
 					
 					var results = archden.resultListHTML(parish, index);
-					$('#mapresults').append(results);
+					$(results).appendTo('#mapresults');
 
 		});
 
@@ -706,7 +715,7 @@ function ArchDen() {
 			html +=	'</div>';
 			html += '</div>';
 			html += '<div class="clearBoth"></div>';
-			html += '</div>';
+//			html += '</div>';
 			
 		html = html.replace(/undefined/g, '');
 		
