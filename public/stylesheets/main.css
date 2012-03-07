@@ -1,5 +1,5 @@
 html {
-    overflow: hidden;
+    overflow: auto;
 }
 
 body {
@@ -153,6 +153,7 @@ hgroup h1 {
 	width: 320px;
 	height: 450px;
 	float: left;
+	position: relative;
 }
 
 #mapContainer {
@@ -213,6 +214,8 @@ hgroup h1 {
 #refine {
 	font-weight: bold;
 	cursor: pointer;
+	position: absolute;
+	bottom: 0;
 }
 
 #refine:hover {
@@ -312,7 +315,7 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 	height: 370px;
 	background: #EEEEEE;
 	border: solid 1px #E5E5E5;
-	position: absolute;
+	position: fixed;
 	top: 18px;
 	left: -381px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
@@ -340,6 +343,7 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 	color: black;
 }
 
+
 div.mapresults {
 	padding: 0px 10px 20px 10px;
 	position: relative;
@@ -358,6 +362,26 @@ div.mapresults {
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 	-moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+}
+
+div.fullscreen {
+	height: auto;
+	overflow: auto;
+	margin-top: 20px;
+}
+
+#exitfullscreen {
+	display: none;
+	top: 10px;
+	right: 10px;
+	padding: 10px;
+	position: fixed;
+	z-index: 100;
+	background: #999966;
+	border: 0;
+	font-size: 14px;
+	color: #FFFFFF;
+	cursor: pointer;
 }
 
 div.mapresulttop {
@@ -409,6 +433,7 @@ div.churchpopup {
 #map-canvas {
 	margin-right: 400px;
 }
+
 
 .ui-autocomplete {
 	max-height: 200px;

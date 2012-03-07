@@ -1,6 +1,9 @@
 #{extends 'main.html' /} #{set title:'ArchDen Locator' /}
 
+<div id="exitfullscreen">Exit FullScreen</div>
+
 <div id="content">
+
 	<div id="main">
 
 		<div id=mapContainer></div>
@@ -10,58 +13,57 @@
 
 				<p class="location">
 					<label for="location">Enter an address, zip code, or city
-						to search</label>
-						<label for="radius" style="float:right">Radius mi</label><br /> <input type="text" name="location"
-						id="location" size="30" /> <input type="text" name="radius"
-						id="radius" value="3" style="float:right"/>
+						to search</label> <label for="radius" style="float: right">Radius
+						mi</label><br /> <input type="text" name="location" id="location"
+						size="30" /> <input type="text" name="radius" id="radius"
+						value="3" style="float: right" />
 				</p>
 				<p class="name">
 					<label for="name"> Or search by Parish name </label><br /> <input
-						id="name" size="30" />
-					<input type="hidden" id="searchname"/>
+						id="name" size="30" /> <input type="hidden" id="searchname" />
 				</p>
 				<p class="refine">
-					<label for="refine" id="refine">
-						Refine your search </label>
-				<div id="more" style="display: none">
-				<fieldset class="fields">
-					<label for="dow" class="select-label"> Day </label> <select class="dow" id="dow">
-						<option>Any</option>
-						<option>Sunday</option>
-						<option value="saturdayanticipatory">Anticipatory</option>
-						<option>Saturday</option>
-						<option>Weekday</option>
-						<option value="holydays">Holy Day</option>
-					</select>
-                    <div class="clear"></div>
-					<label for="tod" class="select-label"> Time of Day </label> <select class="tod"
-						id="tod">
-						<option>Any</option>
-						<option>Morning</option>
-						<option value="Noon">Afternoon</option>
-						<option>Evening</option>
-					</select>
-                    <div class="clear"></div>
-					<label for="tos" class="select-label"> Service Type </label> <select class="tos"
-						id="tos">
-						<option>Mass</option>
-						<option value='life teen/youth mass'>Life Teen Mass</option>
-						<option>Confession</option>
-						<option>Adoration</option>
-						<option>Seasonal</option>
-					</select>
-                    <div class="clear"></div>
-					<label for="lang" class="select-label"> Language </label> <select class="lang"
-						id="lang">
-						<option value = 'english'>English</option>
-						<option value = 'spanish sunday'>Spanish</option>
-						<option value = 'novo order latin'>Latin</option>
-						<option value = 'korean'>Korean</option>
-						<option value = 'vietnamese'>Vietnamese</option>
-						<option value = 'asl'>ASL/Sign Language</option>
-					</select>
-                    <div class="clear"></div>
-				</fieldset>	
+					<label for="refine"> Refine your search </label>
+				<div id="more">
+					<fieldset class="fields">
+						<label for="dow" class="select-label"> Day </label> <select
+							class="dow" id="dow">
+							<option>Any</option>
+							<option>Sunday</option>
+							<option value="saturdayanticipatory">Anticipatory</option>
+							<option>Saturday</option>
+							<option>Weekday</option>
+							<option value="holydays">Holy Day</option>
+						</select>
+						<div class="clear"></div>
+						<label for="tod" class="select-label"> Time of Day </label> <select
+							class="tod" id="tod">
+							<option>Any</option>
+							<option>Morning</option>
+							<option value="Noon">Afternoon</option>
+							<option>Evening</option>
+						</select>
+						<div class="clear"></div>
+						<label for="tos" class="select-label"> Service Type </label> <select
+							class="tos" id="tos">
+							<option>Mass</option>
+							<option value='life teen/youth mass'>Life Teen Mass</option>
+							<option>Confession</option>
+							<option>Adoration</option>
+							<option>Seasonal</option>
+						</select>
+						<div class="clear"></div>
+						<label for="lang" class="select-label"> Language </label> <select
+							class="lang" id="lang">
+							<option value='english'>English</option>
+							<option value='spanish sunday'>Spanish</option>
+							<option value='novo order latin'>Latin</option>
+							<option value='korean'>Korean</option>
+							<option value='vietnamese'>Vietnamese</option>
+							<option value='asl'>ASL/Sign Language</option>
+						</select>
+						<div class="clear"></div>
+					</fieldset>
 				</div>
 
 				<div id="disp"></div>
@@ -72,21 +74,22 @@
 
 				<p class="submit">
 					<input type="button" value="Reset" onClick="resetForm();"
-						style="cursor: pointer;" />
-					<input type="button" value="Search" onClick="searchByTime();"
-						style="cursor: pointer;" />
+						style="cursor: pointer;" /> <input type="button" value="Search"
+						onClick="searchByTime();" style="cursor: pointer;" />
 				</p>
 
 			</form>
+
+			<div id="refine">Show All Parishes</div>
 
 		</div>
 
 
 	</div>
-	
+
 	<div id="mapresults" class="mapresults"></div>
 
-<!--
+	<!--
     <div id=result-list>
 
         <div class="selectlist">
@@ -103,14 +106,15 @@
 
 <div class="feedback-panel">
 	<a class="modalCloseImg" title="Close" onclick="closeDirections();"></a>
- 	<h3>Directions</h3>
- 	<!-- 
+	<h3>Directions</h3>
+	<!-- 
  	<label for="changeStart"> Change Start Address </label> 
  		<input id="changeStart" size="30" />
  	 -->
- 	<div id="directions-panel"></div>
-      
+	<div id="directions-panel"></div>
+
 </div>
+
 
 <script>
 	var hidden = true;
@@ -123,42 +127,46 @@
 		archden.location = $('input#location').val();
 		archden.radius = $('input#radius').val();
 		archden.name = $('input#name').val();
-		
-		//debug.log("Name: "+ archden.name);
-		
-		if(archden.name){
+
+		if (archden.name) {
 			archden.radius = 500;
-		}else{
-			archden.dow = 'sunday';
 		}
-		
-		if(archden.tos == 'Confession'){
+		//else{
+		//	debug.log("Dow: "+ archden.dow);
+		//	archden.dow = 'sunday';
+		//}
+
+		if (archden.tos == 'Confession') {
 			archden.confession = true;
-			if(archden.dow == 'sunday'){
+			if (archden.dow == 'sunday') {
 				archden.dow = 'saturday';
 			}
-		}else{
+		} else {
 			archden.confession = false;
 		}
-		
-		if(archden.lang == 'english'){
+
+		if (archden.lang == 'english') {
 			archden.topic = null;
-		}else{
+		} else {
 			archden.topic = archden.lang;
 		}
-		
-		if(archden.tos == 'Adoration'){
+
+		if (archden.tos == 'Adoration') {
 			archden.topic = 'adoration';
-		}else if(archden.tos == "life teen/youth mass"){
+		} else if (archden.tos == "life teen/youth mass") {
 			archden.topic = 'life teen/youth mass';
 		}
 
-		//debug.log("Service Type: " + archden.tos);
+		debug.log("Service Type: " + archden.tos);
 		if (archden.location) {
-			if(archden.location.toUpperCase() == 'HIGHLANDS RANCH' ){
+			if (archden.location.toUpperCase() == 'HIGHLANDS RANCH') {
 				archden.location = '80126'
 			}
-			archden.location = archden.location + ', CO';
+			if (archden.location.match(/CO$/) || archden.location.match(/co$/)) {
+
+			} else {
+				archden.location = archden.location + ', CO';
+			}
 			//debug.log("using location:" + archden.location);
 			archden.getGeo();
 		} else {
@@ -166,64 +174,80 @@
 		}
 	}
 
-	$("select").css({"width": 150});
+	$("select").css({
+		"width" : 150
+	});
 	$("select").change(searchByTime);
 	$(":radio").click(searchByTime);
 	$(":checkbox").click(searchByTime);
-	
-	$('input').keypress(function(e){
-	      if(e.which == 13){
-	      	searchByTime();
-	      }
+
+	$('input').keypress(function(e) {
+		if (e.which == 13) {
+			searchByTime();
+		}
 	});
 
 	$('#refine').click(function() {
-		if (hidden) {
-			$('#more').show('slow', function() {
-				hidden = false;
-			});
-		} else {
-			$('#more').hide('slow', function() {
-				hidden = true;
-			});
-		}
+		debug.log("clicked refine");
+		archden.radius = 500;
+		archden.all = true;
+		$('#main').hide();
+		$('#mapresults').html('');
+		$('#mapresults').addClass("fullscreen")
+		$('#exitfullscreen').show();
+		archden.queryCassandraHq();
 	});
 	
-	function expandDetails(id){
+	$('#exitfullscreen').click(function() {
+		resetForm();
+	});
+	//$('#refine').click(function() {
+	//	if (hidden) {
+	//		$('#more').show('slow', function() {
+	//			hidden = false;
+	//		});
+	//	} else {
+	//		$('#more').hide('slow', function() {
+	//			hidden = true;
+	//		});
+	//	}
+	//});
+
+	function expandDetails(id) {
 		if (!details[id]) {
-			$('#details-'+ id).show('slow', function() {
+			$('#details-' + id).show('slow', function() {
 				details[id] = true;
 			});
 		} else {
-			$('#details-'+ id).hide('fast', function() {
+			$('#details-' + id).hide('fast', function() {
 				details[id] = false;
 			});
 		}
 	}
-	
+
 	var feedbackTab = {
 
-			speed : 300,
-			containerWidth : $('.feedback-panel').outerWidth(),
-			containerHeight : $('.feedback-panel').outerHeight(),
-			tabWidth : $('.feedback-tab').outerWidth(),
+		speed : 300,
+		containerWidth : $('.feedback-panel').outerWidth(),
+		containerHeight : $('.feedback-panel').outerHeight(),
+		tabWidth : $('.feedback-tab').outerWidth(),
 
-			init : function() {
-				$('.feedback-panel').css('height', feedbackTab.containerHeight + 'px');
-			}
-		};
+		init : function() {
+			$('.feedback-panel').css('height',
+					feedbackTab.containerHeight + 'px');
+		}
+	};
 
 	feedbackTab.init();
-	
-	function closeDirections(){
+
+	function closeDirections() {
 		archden.slideClose();
 	}
-	
-	function resetForm(){
+
+	function resetForm() {
 		//$( "form" )[ 0 ].reset();
 		location.reload();
 	}
-
 </script>
 
 <!-- Include javscript last -->

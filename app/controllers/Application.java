@@ -125,7 +125,7 @@ public class Application extends Controller {
 			renderJSON(json);
 		} catch (Exception e) {
 			Logger.error(e, "Unable to plot by mass time");
-			response.status = 400;
+			response.status = 200;
 			renderJSON("No Results");
 		}
 

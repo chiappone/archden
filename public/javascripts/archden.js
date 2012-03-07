@@ -121,9 +121,9 @@ function generateInfoWindowHTML(parish) {
 		link = '<a href='+ link +' target="_blank">' + link + '</a>';
 	}
 	var coords = parish.latlng.lat() + "," + parish.latlng.lng();
-	return [ '<h4>', parish.name, '</h4>', '<label>', parish.physicaladdress,
+	return [ '<h4>', parish.full_name, '</h4>', '<label>', parish.physicaladdress,
 			', ', parish.physicalzip, '</label><ul><li>Pastor: ',
-			parish.pastor, '</li>', '<li>Sunday Masstimes: ', archden.findAndConvertTime(parish.sunday),
+			parish.pastor, '</li>', '<li>Sunday Masses: ', archden.findAndConvertTime(parish.sunday),
 			'</li>', '<li>Website: ', link, '</li></ul>',
 			'<a onclick="archden.directions(\'', parish.physicaladdress, '\')">',
 			'Show Directions </a>' ].join('');
@@ -285,7 +285,17 @@ function ArchDen() {
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function(e) {
 			if (this.readyState == 4 && this.status == 200) {
-				var resp = jQuery.parseJSON(this.responseText);
+				var resp;
+				try{
+					resp = jQuery.parseJSON(this.responseText);
+				}catch(err){
+					$('#closest-church').text('No Results Found.');
+					return;
+				}
+				if(!resp){
+					$('#closest-church').text('No Results Found.');
+					return;
+				}
 				if (!resp.members) {
 					$('#closest-church').text('No Results Found.');
 					return;
@@ -452,7 +462,10 @@ function ArchDen() {
 
 	this.buildResultList = function() {
 		//debug.log("building result list");
-		archden.parishData = archden.parishData.sort(archden.compare);
+		if(archden.all)
+			archden.parishData = archden.parishData.sort(archden.compareByFullname);
+		else
+			archden.parishData = archden.parishData.sort(archden.compare);
 		
 		$.each(archden.parishData,
 				function(index, parish) {
@@ -530,12 +543,19 @@ function ArchDen() {
 	}
 	
 	this.compareParish = function(a, b) {
-		if (a.name < b.name) //sort string ascending
-			  debug.log
-			  return -1 
-		if (a.name > b.name)
-			  return 1
-	    return 0 //default return value (no sorting)
+		if (a.value < b.value) 
+			  return -1;
+		if (a.value > b.value)
+			  return 1;
+	    return 0;
+	}
+	
+	this.compareByFullname = function(a, b) {
+		if (a.full_name < b.full_name) 
+			  return -1;
+		if (a.full_name > b.full_name)
+			  return 1;
+	    return 0;
 	}
 	
 	this.resultListHTML = function(parish, index){
@@ -557,19 +577,19 @@ function ArchDen() {
 		
 		if (archden.dow) {
 			if (archden.dow == 'Sunday') {
-				topic += '<b>Sunday Masstimes: </b> ';
+				topic += '<b>Sunday Mass Times: </b> ';
 				topic += parish.sunday;
 			}
 			if (archden.dow == 'saturdayanticipatory') {
-				topic += '<b>Anticipatory Masstimes: </b> ';
+				topic += '<b>Anticipatory Mass Time: </b> ';
 				topic += parish.saturday_anticipatory;
 			}
 			if (archden.dow == 'Saturday') {
-				topic += '<b>Saturday Masstimes: </b> ';
+				topic += '<b>Saturday Mass Times: </b> ';
 				topic += parish.saturday;
 			}
 			if (archden.dow == 'holydays') {
-				topic += '<b>Holy Day Masstimes: </b> ';
+				topic += '<b>Holy Day Mass Times: </b> ';
 				topic += parish.holy_days;
 			}
 			if (archden.dow == 'Weekday') {
@@ -597,23 +617,23 @@ function ArchDen() {
 				topic += parish.life_teen_youth_mass;
 			}
 			if (archden.topic == 'spanish sunday') {
-				topic = '<b>Spanish Masstimes: </b> ';
+				topic = '<b>Spanish Mass Times: </b> ';
 				topic += parish.spanish_sunday;
 			}
 			if (archden.topic == 'novo order latin') {
-				topic = '<b>Latin Masstimes: </b> ';
+				topic = '<b>Latin Mass Times: </b> ';
 				topic += parish.novo_order_latin;
 			}
 			if (archden.topic == 'korean') {
-				topic = '<b>Korean Masstimes: </b> ';
+				topic = '<b>Korean Mass Times: </b> ';
 				topic += parish.korean;
 			}
 			if (archden.topic == 'vietnamese') {
-				topic = '<b>Vietnamese Masstimes: </b> ';
+				topic = '<b>Vietnamese Mass Times: </b> ';
 				topic += parish.vietnamese;
 			}
 			if (archden.topic == 'asl') {
-				topic = '<b>ASL Masstimes: </b> ';
+				topic = '<b>ASL Mass Times: </b> ';
 				topic += parish.asl;
 			}
 		}
@@ -639,8 +659,8 @@ function ArchDen() {
 			topic = archden.findAndConvertTime(topic);
 		
 		var	detailsLeft = '<b>Pastor:</b> '+ parish.pastor+ '<br/>';
-			detailsLeft += '<b>Sunday Masstimes:</b> '+parish.sunday;
-			detailsLeft += '<br/>'+ '<b>Anticipatory Masstimes:</b> ';
+			detailsLeft += '<b>Sunday Masses:</b> '+parish.sunday;
+			detailsLeft += '<br/>'+ '<b>Anticipatory Mass:</b> ';
 			detailsLeft += parish.saturday_anticipatory+ '<br/>';
 			detailsLeft += '<b>Adoration:</b> '+ parish.adoration;
 			detailsLeft += '<br/>'+ '<b>Website:</b> ';
@@ -694,7 +714,7 @@ function ArchDen() {
 	        html += '</div>';
 	        html += '<div class="mapresulttop">';
 			html += '<h2>';
-			html += '<span onclick="expandDetails('+ index +')" >' + parish.name +'</span>';
+			html += '<span onclick="expandDetails('+ index +')" >' + parish.full_name +'</span>';
 			html += '</h2>';
 	        html += '</div>';
 	        html += '<div class="parishinfo">';
