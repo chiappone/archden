@@ -270,6 +270,7 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 .submit input {
 	width: auto;
 	padding: 9px 15px;
+	margin: 2px;
 	background: #999966;
 	border: 0;
 	font-size: 14px;
