@@ -195,6 +195,7 @@
 		$('#mapresults').html('');
 		$('#mapresults').addClass("fullscreen")
 		$('#exitfullscreen').show();
+		$('html').css({overflow: "auto"});
 		archden.queryCassandraHq();
 	});
 	
