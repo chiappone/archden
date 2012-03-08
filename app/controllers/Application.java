@@ -75,6 +75,8 @@ public class Application extends Controller {
 	public static void plotByMassTimes(String dayofweek, String timeofday,
 			String name, boolean confession) {
 		String operator = "EQ";
+		String operator2 = "LT";
+		String timeofday2 = null;
 		QueryAppender qa = new QueryAppender();
 		Gson gson = new Gson();
 		try {
@@ -82,12 +84,14 @@ public class Application extends Controller {
 				timeofday = "1100";
 				operator = "LT";
 			} else if (timeofday.equalsIgnoreCase("noon")) {
-				timeofday = "1200";
+				timeofday = "1100";
+				operator = "GT";
+				timeofday2 = "1259";
 			} else if (timeofday.equalsIgnoreCase("evening")) {
 				timeofday = "1200";
 				operator = "GT";
 			} else {
-				timeofday = "0100";
+				timeofday = "100";
 				operator = "GT";
 			}
 			
@@ -99,7 +103,7 @@ public class Application extends Controller {
 			}
 
 			Map<String, Map<String, String>> retMap = qa.queryByTime(dayofweek,
-					timeofday, operator, null);
+					timeofday, operator, null, timeofday2, operator2);
 			
 			JsonElement json = null;
 			

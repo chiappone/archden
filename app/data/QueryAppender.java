@@ -21,22 +21,23 @@ import constants.Constants;
 public class QueryAppender {
 
 	public Map<String,Map<String,String>> queryByTime(String dayofweek, String timeofday,
-			String operator, String name) 
+			String operator, String name, String timeofday2, String operator2) 
 			throws Exception{
 		
-		if(operator == null){
-			operator = "=";
-		}else if(operator.equalsIgnoreCase("GT")){
-			operator = ">";
-		}else if(operator.equalsIgnoreCase("LT")){
-			operator = "<";
-		}else{
-			operator = "=";
-		}
+		operator = convertOp(operator);
+		operator2 = convertOp(operator2);
 		
 		String ws = Constants.WSURL + "/cql/archden/masstimes?select=";
     	StringBuilder select = new StringBuilder("select * WHERE "+
     			"'timeofday' "+ operator + " '"+ timeofday +"'");
+    	if(timeofday2 != null){
+    		select.append(" AND 'timeofday' ");
+    		select.append(operator2);
+    		select.append(" '");
+    		select.append(timeofday2);
+    		select.append("'");
+    	}
+    	
     	if(!dayofweek.equalsIgnoreCase("any")){
     		select.append(" AND 'dayofweek' = '"+ dayofweek.toLowerCase() +"'"); 
     	}else{
@@ -69,6 +70,20 @@ public class QueryAppender {
 		}
 		
 		return retMap;
+	}
+	
+	private String convertOp(String operator){
+		
+		if(operator == null){
+			operator = "=";
+		}else if(operator.equalsIgnoreCase("GT")){
+			operator = ">";
+		}else if(operator.equalsIgnoreCase("LT")){
+			operator = "<";
+		}else{
+			operator = "=";
+		}
+		return operator;
 	}
 	
 	private Map<String,Map<String,String>> queryByRowkey(String rowKey) 
