@@ -44,7 +44,7 @@ public class Application extends Controller {
 			return;
 		}
 
-		String ws = Constants.WSURL + "/cql/archden/locations?select=select *";
+		String ws = Constants.WSURL + "/cql/archden/"+ Constants.CF_LOC +"?select=select *";
 		HttpResponse res = WS.url(ws)
 				.authenticate(Constants.TOKEN, Constants.ACCOUNTID).get();
 
@@ -62,7 +62,7 @@ public class Application extends Controller {
 		name = name.trim();
 
 		String ws = Constants.WSURL
-				+ "/cql/archden/locations?select=select * WHERE 'name' = '"
+				+ "/cql/archden/"+ Constants.CF_LOC +"?select=select * WHERE 'name' = '"
 				+ name + "'";
 		Logger.info("Request: " + ws);
 		HttpResponse res = WS.url(ws)

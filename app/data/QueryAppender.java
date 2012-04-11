@@ -27,7 +27,7 @@ public class QueryAppender {
 		operator = convertOp(operator);
 		operator2 = convertOp(operator2);
 		
-		String ws = Constants.WSURL + "/cql/archden/masstimes?select=";
+		String ws = Constants.WSURL + "/cql/archden/"+ Constants.CF_MASS +"?select=";
     	StringBuilder select = new StringBuilder("select * WHERE "+
     			"'timeofday' "+ operator + " '"+ timeofday +"'");
     	if(timeofday2 != null){
@@ -89,7 +89,7 @@ public class QueryAppender {
 	private Map<String,Map<String,String>> queryByRowkey(String rowKey) 
 			throws UnsupportedEncodingException{
 		
-		String ws = Constants.WSURL +"/cql/archden/locations?select=";
+		String ws = Constants.WSURL +"/cql/archden/"+ Constants.CF_LOC +"?select=";
 		String sel = URLEncoder.encode("select * WHERE KEY = '"+ rowKey +"'", "UTF-8");
 		
 		Logger.info("URL: "+ ws + sel);
