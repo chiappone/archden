@@ -11,7 +11,7 @@ import constants.Constants;
 
 public class LocatorTest extends FunctionalTest {
 
-	private static String URL = "http://localhost:9000/";
+	private static String URL = "https://archden.herokuapp.com/";
 	
 
 	public void deleteLocation() {
@@ -24,7 +24,7 @@ public class LocatorTest extends FunctionalTest {
 		System.out.println(res.getJson());
 	}
 
-	
+	@Test
 	public void getAllLocations() throws Exception {
 
 		String ws = URL + "plotall";

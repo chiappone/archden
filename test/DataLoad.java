@@ -15,12 +15,15 @@ import play.test.UnitTest;
 import constants.Constants;
 
 public class DataLoad extends UnitTest {
+	
+	private static String CF_MASS = "masstimes";
+	private static String CF_LOC = "locations";
 
     @Test
     public void loadCsvFile() throws Exception {
         
     	InputStreamReader reader = new InputStreamReader(
-    			getClass().getResourceAsStream("parishes-010512.csv"));
+    			getClass().getResourceAsStream("parishes-053012.csv"));
     	
     	BufferedReader rb = new BufferedReader(reader);
     	int linenum = 0;
@@ -96,7 +99,7 @@ public class DataLoad extends UnitTest {
     	Matcher m = p.matcher(s);
     	while(m.find()){
     		String tod = m.group(1);
-    		String ws = Constants.WSURL +"/data/archden/masstimes/" + 
+    		String ws = Constants.WSURL +"/data/archden/" + CF_MASS +"/" + 
         			parishid +":"+ header +":"+ tod;
     		System.out.println("Send: "+ ws);
     		Map<String,Object> params = new HashMap<String,Object>();
@@ -113,7 +116,7 @@ public class DataLoad extends UnitTest {
     
     private void sendLocationRequest(Map<String,Object> params){
     	
-    	String ws = Constants.WSURL +"/data/archden/locations/"+ params.get("number");
+    	String ws = Constants.WSURL +"/data/archden/" + CF_LOC +"/"+ params.get("number");
     	System.out.println("REQ: "+ ws);
     	
     	HttpResponse res = WS.url(ws)

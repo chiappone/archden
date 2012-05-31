@@ -7,8 +7,8 @@ public class Constants {
 	public static String VER = "1";
 	public static String TOKEN = "alfXEomnR2";
 	public static String ACCOUNTID = "6db2f993-ca2e-4e73-a549-a2fa0b5db285";
-	public static String CF_MASS = "masstimes2";
-	public static String CF_LOC = "locations2";
+	public static String CF_MASS = "masstimes";
+	public static String CF_LOC = "locations";
 	
 
 }

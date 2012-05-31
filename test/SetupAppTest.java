@@ -11,7 +11,10 @@ import data.QueryAppender;
 
 public class SetupAppTest extends FunctionalTest {
 
-	@Test
+	private static String CF_MASS = "masstimes2";
+	private static String CF_LOC = "locations2";
+	
+	//@Test
 	public void createKeyspace() {
 
 		String ws = Constants.WSURL + "/keyspace/archden";
@@ -23,7 +26,7 @@ public class SetupAppTest extends FunctionalTest {
 
 	}
 	
-	@Test
+	//@Test
 	public void dropCf() {
 		String ws = Constants.WSURL + "/columnfamily/archden/locations";
 
@@ -37,14 +40,16 @@ public class SetupAppTest extends FunctionalTest {
 	public void createColumnFam() {
 
 		String ws = Constants.WSURL
-				+ "/columnfamily/archden/masstimes/UTF8TYPE";
+				+ "/columnfamily/archden/"+ CF_MASS + "/UTF8TYPE";
+		
+		System.out.println("URL: "+ ws);
 
 		HttpResponse res = WS.url(ws)
 				.authenticate(Constants.TOKEN, Constants.ACCOUNTID).post();
 
 		System.out.println(res.getJson());
 
-		ws = Constants.WSURL + "/columnfamily/archden/locations/UTF8TYPE";
+		ws = Constants.WSURL + "/columnfamily/archden/"+ CF_LOC +"/UTF8TYPE";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
@@ -57,7 +62,7 @@ public class SetupAppTest extends FunctionalTest {
 	public void createColIndex() {
 
 		String ws = Constants.WSURL
-				+ "/column/archden/masstimes/timeofday/INTEGERTYPE?isIndex=true";
+				+ "/column/archden/"+ CF_MASS +"/timeofday/INTEGERTYPE?isIndex=true";
 
 		HttpResponse res = WS.url(ws)
 				.authenticate(Constants.TOKEN, Constants.ACCOUNTID).post();
@@ -65,7 +70,7 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 
 		ws = Constants.WSURL
-				+ "/column/archden/masstimes/dayofweek/UTF8TYPE?isIndex=true";
+				+ "/column/archden/"+ CF_MASS +"/dayofweek/UTF8TYPE?isIndex=true";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
@@ -73,7 +78,7 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 		
 		ws = Constants.WSURL
-				+ "/column/archden/masstimes/name/UTF8TYPE?isIndex=true";
+				+ "/column/archden/"+ CF_MASS +"/name/UTF8TYPE?isIndex=true";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
@@ -81,7 +86,7 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 		
 		ws = Constants.WSURL
-				+ "/column/archden/masstimes/index/UTF8TYPE?isIndex=true";
+				+ "/column/archden/"+ CF_MASS +"/index/UTF8TYPE?isIndex=true";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
@@ -89,7 +94,7 @@ public class SetupAppTest extends FunctionalTest {
 		System.out.println(res.getJson());
 
 		ws = Constants.WSURL
-				+ "/column/archden/locations/name/UTF8TYPE?isIndex=true";
+				+ "/column/archden/"+ CF_LOC +"/name/UTF8TYPE?isIndex=true";
 
 		res = WS.url(ws).authenticate(Constants.TOKEN, Constants.ACCOUNTID)
 				.post();
