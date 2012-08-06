@@ -23,7 +23,7 @@ public class DataLoad extends UnitTest {
     public void loadCsvFile() throws Exception {
         
     	InputStreamReader reader = new InputStreamReader(
-    			getClass().getResourceAsStream("parishes-053012.csv"));
+    			getClass().getResourceAsStream("parishes-080612.csv"));
     	
     	BufferedReader rb = new BufferedReader(reader);
     	int linenum = 0;
